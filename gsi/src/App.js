@@ -5,14 +5,14 @@ function FilterableProductTable({ products }) {
   const [inStockOnly, setInStockOnly] = useState(false);
 
   return (
-    <div style={{position: 'absolute', height: '750px', overflow: 'auto', direction: 'rtl'}}>
-      <SearchBar 
-        filterText={filterText} 
+    <div style={{ position: 'absolute', height: '750px', overflow: 'auto', direction: 'rtl' }}>
+      <SearchBar
+        filterText={filterText}
         onFilterTextChange={setFilterText}
-        inStockOnly={inStockOnly} 
+        inStockOnly={inStockOnly}
         onInStockOnlyChange={setInStockOnly} />
-      <ProductTable 
-        products={products} 
+      <ProductTable
+        products={products}
         filterText={filterText}
         inStockOnly={inStockOnly} />
     </div>
@@ -26,13 +26,13 @@ function ProductRow({ product }) {
     </span>;
 
   return (
-    <div style={{background: 'white', border: "1px solid black", margin: "10px"}}>
+    <div style={{ background: 'white', border: "1px solid black", margin: "10px" }}>
       <tr>
         <td>{name}</td>
         <td>{product.price}</td>
       </tr>
       <tr>
-        <img src="https://static.vecteezy.com/system/resources/previews/021/952/562/original/tasty-hamburger-on-transparent-background-png.png" width="100" height="100"/>
+        <img src="https://static.vecteezy.com/system/resources/previews/021/952/562/original/tasty-hamburger-on-transparent-background-png.png" width="100" height="100" />
       </tr>
     </div>
   );
@@ -56,7 +56,7 @@ function ProductTable({ products, filterText, inStockOnly }) {
   });
 
   return (
-    <div style={{overflow: 'auto'}}>
+    <div style={{ overflow: 'auto' }}>
       <table>
         <tbody>{rows}</tbody>
       </table>
@@ -70,27 +70,27 @@ function SearchBar({
 }) {
   return (
     <form>
-      <input 
-        type="text" 
-        value={filterText} placeholder="Search..." 
+      <input
+        type="text"
+        value={filterText} placeholder="Search..."
         onChange={(e) => onFilterTextChange(e.target.value)} />
     </form>
   );
 }
 
 const PRODUCTS = [
-  {category: "Fruits", price: "$1", name: "Apple"},
-  {category: "Fruits", price: "$1", name: "Dragonfruit"},
-  {category: "Fruits", price: "$2", name: "Passionfruit"},
-  {category: "Vegetables", price: "$2", name: "Spinach"},
-  {category: "Vegetables", price: "$4", name: "Pumpkin"},
-  {category: "Vegetables", price: "$1", name: "Peas"},
-  {category: "Fruits", price: "$1", name: "Apple"},
-  {category: "Fruits", price: "$1", name: "Dragonfruit"},
-  {category: "Fruits", price: "$2", name: "Passionfruit"},
-  {category: "Vegetables", price: "$2", name: "Spinach"},
-  {category: "Vegetables", price: "$4", name: "Pumpkin"},
-  {category: "Vegetables", price: "$1", name: "Peas"}
+  { category: "Fruits", price: "$1", name: "Apple" },
+  { category: "Fruits", price: "$1", name: "Dragonfruit" },
+  { category: "Fruits", price: "$2", name: "Passionfruit" },
+  { category: "Vegetables", price: "$2", name: "Spinach" },
+  { category: "Vegetables", price: "$4", name: "Pumpkin" },
+  { category: "Vegetables", price: "$1", name: "Peas" },
+  { category: "Fruits", price: "$1", name: "Apple" },
+  { category: "Fruits", price: "$1", name: "Dragonfruit" },
+  { category: "Fruits", price: "$2", name: "Passionfruit" },
+  { category: "Vegetables", price: "$2", name: "Spinach" },
+  { category: "Vegetables", price: "$4", name: "Pumpkin" },
+  { category: "Vegetables", price: "$1", name: "Peas" }
 ];
 
 const CATEGORIES = [
@@ -118,34 +118,34 @@ const CATEGORIES = [
   ["Oil", "Dressing", "Condiments"]
 ];
 
-function Store({aisleCategories}) {
+function Store({ aisleCategories }) {
   return (
-  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '50px 250px', overflow: 'auto'}}>
-    <div style={{display: 'flex', flexDirection: 'row-reverse', margin: '10px' }}>
-      {aisleCategories.map((categories, index) => (
-        <Aisle key={index} categories={categories} aisleNumber={index}/>
-      ))}
+    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '50px 250px', overflow: 'auto' }}>
+      <div style={{ display: 'flex', flexDirection: 'row-reverse', margin: '10px' }}>
+        {aisleCategories.map((categories, index) => (
+          <Aisle key={index} categories={categories} aisleNumber={index} />
+        ))}
+      </div>
     </div>
-  </div>
   );
 }
 
-function Aisle({key, categories, aisleNumber}) {
+function Aisle({ key, categories, aisleNumber }) {
 
   const paddingLeft = aisleNumber % 2 === 1; // This is so every other aisle is back-to-back like in a store
 
   return (
-      <div key={key} style={{ display: 'flex', height: "1000px", flexDirection: 'column-reverse', justifyContent: 'space-between', marginLeft: paddingLeft ? '20px' : '2px'}}>
-        {categories.map((category, subIndex) => (
-          <SubAisle key={category} category={category}/>
-        ))}
-      </div>
+    <div key={key} style={{ display: 'flex', height: "1000px", flexDirection: 'column-reverse', justifyContent: 'space-between', marginLeft: paddingLeft ? '20px' : '2px' }}>
+      {categories.map((category, subIndex) => (
+        <SubAisle key={category} category={category} />
+      ))}
+    </div>
   );
 }
 
-function SubAisle({key, category}) {
+function SubAisle({ key, category }) {
   return (
-      <button key={category} style={{height: "100%", border: '1px solid black', marginBottom: "2px"}}>{category}</button>
+    <button key={category} style={{ height: "100%", border: '1px solid black', marginBottom: "2px" }}>{category}</button>
   );
 }
 
@@ -154,8 +154,8 @@ export default function App() {
   // return <Store aisleCategories={CATEGORIES}/>
   return (
     <>
-      <FilterableProductTable products={PRODUCTS}/>
-      <Store aisleCategories={CATEGORIES}/>
+      <FilterableProductTable products={PRODUCTS} />
+      <Store aisleCategories={CATEGORIES} />
     </>
   );
 }
