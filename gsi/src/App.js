@@ -106,12 +106,42 @@ function SearchBar({
     <form>
       <input
         type="text"
-        value={filterText} placeholder="Search..."
-        onChange={(e) => onFilterTextChange(e.target.value)} />
-      <button onClick={() => onFilterTextChange("")}>clear</button>
-    </form>
+        value={filterText}
+        placeholder="Search..."
+        onChange={(e) => onFilterTextChange(e.target.value)}
+        style={{
+          width: '30%',
+          padding: '10px',
+          position: 'relative',
+          left: '-60px',
+          top: '-10px',
+          //margin: '0px 20px 10px 0px',
+          borderRadius: '20px',
+          border: '1px solid black',
+          boxShadow: '4px 4px 6px red',
+          fontSize: '18px',
+        }}
+      />
+      <button
+        onClick={() => onFilterTextChange("")}
+        style={{
+          width: '70px',
+          padding: '10px',
+          position: 'relative',
+          left: '-30px',
+          top: '-10px',
+          //margin: '0px 20px 10px 0px',
+          borderRadius: '30px',
+          //border: '1px solid black',
+          boxShadow: '4px 4px 6px red',
+          //fontSize: '18px',
+        }}
+
+      >Clear</button>
+    </form >
   );
 }
+
 
 /*
 const CATEGORIES = [
@@ -253,7 +283,7 @@ function ShelvedProducts({ products }) {
           <div style={modalOverlayStyle} onClick={closeModal}>
             <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
               <span style={closeButtonStyle} onClick={closeModal}>&times;</span>
-              <p>This is the content of the modal.</p> {/* New Component */}
+              <p>Work in progress :(</p> {/* New Component */}
             </div>
           </div>
         )}
