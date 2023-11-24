@@ -7,13 +7,24 @@ function FilterableProductTable({ products }) {
   // <div style={{position: 'absolute', height: '750px', width: "500px", overflow: 'auto', direction: 'ltr'}}></div>
 
   return (
-    <div style={{ position: 'fixed' }}>
-      <SearchBar
-        filterText={filterText}
-        onFilterTextChange={setFilterText} />
-      <ProductTable
-        products={products}
-        filterText={filterText} />
+    <div>
+      <div style={{
+        position: 'fixed',
+        top: '3%',
+        left: '60%',
+        transform: 'translate(-50%, -50%)',
+        width: '100%',
+        textAlign: 'center'
+      }}>
+        <SearchBar
+          filterText={filterText}
+          onFilterTextChange={setFilterText} />
+      </div>
+      <div style={{ position: 'fixed' }}>
+        <ProductTable
+          products={products}
+          filterText={filterText} />
+      </div>
     </div>
   );
 }
@@ -100,27 +111,9 @@ function SearchBar({
     </form>
   );
 }
-/*
-const PRODUCTS = [
-  {category: "Fruits", price: "$1", name: "Apple"},
-  {category: "Fruits", price: "$1", name: "Dragonfruit"},
-  {category: "Fruits", price: "$2", name: "Passionfruit"},
-  {category: "Vegetables", price: "$2", name: "Spinach"},
-  {category: "Vegetables", price: "$4", name: "Pumpkin"},
-  {category: "Vegetables", price: "$1", name: "Peas"},
-  {category: "Fruits", price: "$1", name: "Pear"},
-  {category: "Fruits", price: "$1", name: "Peach"},
-  {category: "Fruits", price: "$2", name: "Plumb"},
-  {category: "Vegetables", price: "$2", name: "Carrot"},
-  {category: "Vegetables", price: "$4", name: "Squash"},
-  {category: "Vegetables", price: "$1", name: "Beans"},
-];
-*/
 
-/*
 const CATEGORIES = [
-  ["Water"],
-  ["Petfood"],
+  ["Water", "Petfood"],
   ["Tissues", "Shampoo"],
   ["Diapers", "Babyfood"],
   ["Detergent", "Cleaning Supplies", "Soap"],
@@ -142,7 +135,45 @@ const CATEGORIES = [
   ["Tomato", "Pasta", "Mexican", "Plastic"],
   ["Oil", "Dressing", "Condiments"]
 ];
-*/
+
+const PRODUCTS = [
+  // Water
+  { name: "Bottled Water 500ml", price: 1.99, category: "Water" },
+  { name: "Spring Water 1L", price: 2.49, category: "Water" },
+  { name: "Mineral Water 750ml", price: 1.79, category: "Water" },
+  { name: "Purified Water 1.5L", price: 2.99, category: "Water" },
+  { name: "Sparkling Water 330ml", price: 1.49, category: "Water" },
+  { name: "Coconut Water 500ml", price: 2.29, category: "Water" },
+  { name: "Flavored Watermelon Water", price: 2.79, category: "Water" },
+  { name: "Alkaline Water 1L", price: 3.99, category: "Water" },
+  { name: "Sport Electrolyte Water", price: 2.99, category: "Water" },
+  { name: "Artesian Water 750ml", price: 2.69, category: "Water" },
+
+  // Petfood
+  { name: "Dry Dog Food 5kg", price: 12.99, category: "Petfood" },
+  { name: "Canned Cat Food 400g", price: 1.49, category: "Petfood" },
+  { name: "Pet Treats Variety Pack", price: 5.99, category: "Petfood" },
+  { name: "Premium Catnip", price: 3.99, category: "Petfood" },
+  { name: "Grain-Free Dog Treats", price: 4.49, category: "Petfood" },
+  { name: "Wet Puppy Food 300g", price: 2.99, category: "Petfood" },
+  { name: "Fish Flavored Cat Litter", price: 7.99, category: "Petfood" },
+  { name: "Small Animal Hay 1kg", price: 6.49, category: "Petfood" },
+  { name: "Bird Seed Mix", price: 4.99, category: "Petfood" },
+  { name: "Natural Rawhide Bones", price: 8.99, category: "Petfood" },
+
+  // Tissues, Shampoo
+  { name: "Facial Tissues 3-Ply", price: 1.79, category: "Tissues" },
+  { name: "Pocket-Sized Tissue Pack", price: 0.99, category: "Tissues" },
+  { name: "Aloe Vera Shampoo 500ml", price: 5.99, category: "Shampoo" },
+  { name: "Anti-Dandruff Shampoo 250ml", price: 4.49, category: "Shampoo" },
+  { name: "Moisturizing Body Wash", price: 6.99, category: "Shampoo" },
+  { name: "Scented Bath Bombs Set", price: 9.99, category: "Shampoo" },
+  { name: "Gentle Baby Shampoo 200ml", price: 3.99, category: "Shampoo" },
+  { name: "Hypoallergenic Baby Wipes", price: 2.49, category: "Shampoo" },
+  { name: "Exfoliating Shower Gel", price: 7.49, category: "Shampoo" },
+  { name: "Organic Lavender Soap", price: 4.99, category: "Shampoo" },
+];
+
 
 function Store({ aisleCategories }) {
   return (
@@ -217,3 +248,49 @@ export default function App() {
     </>
   );
 }
+
+
+
+/*
+const PRODUCTS = [
+  {category: "Fruits", price: "$1", name: "Apple"},
+  {category: "Fruits", price: "$1", name: "Dragonfruit"},
+  {category: "Fruits", price: "$2", name: "Passionfruit"},
+  {category: "Vegetables", price: "$2", name: "Spinach"},
+  {category: "Vegetables", price: "$4", name: "Pumpkin"},
+  {category: "Vegetables", price: "$1", name: "Peas"},
+  {category: "Fruits", price: "$1", name: "Pear"},
+  {category: "Fruits", price: "$1", name: "Peach"},
+  {category: "Fruits", price: "$2", name: "Plumb"},
+  {category: "Vegetables", price: "$2", name: "Carrot"},
+  {category: "Vegetables", price: "$4", name: "Squash"},
+  {category: "Vegetables", price: "$1", name: "Beans"},
+];
+*/
+
+/*
+const CATEGORIES = [
+  ["Water"],
+  ["Petfood"],
+  ["Tissues", "Shampoo"],
+  ["Diapers", "Babyfood"],
+  ["Detergent", "Cleaning Supplies", "Soap"],
+  ["Toilet Paper", "Paper Plates"],
+  ["Fish", "Vegtables", "Potato", "Breakfast"],
+  ["Meals", "International"],
+  ["Pizza", "TV Dinners", "Perogies"],
+  ["Ice Cream", "Bakery"],
+  ["Cereal", "Jam"],
+  ["Juice", "Coffie"],
+  ["Snacks", "Cookies"],
+  ["Soup", "Crackers"],
+  ["Canned Food"],
+  ["Indian", "Rice"],
+  ["Asian", "Jamacian", "Beans"],
+  ["Chips", "Nuts"],
+  ["Soda"],
+  ["Flour", "Baking", "Spices", "Sugar"],
+  ["Tomato", "Pasta", "Mexican", "Plastic"],
+  ["Oil", "Dressing", "Condiments"]
+];
+*/
