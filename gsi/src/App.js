@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+
 function FilterableProductTable({ products }) {
   const [filterText, setFilterText] = useState('');
   const [filterCategory, setFilterCategory] = useState(null);
@@ -39,10 +40,10 @@ function ProductRow({ product }) {
       const productItem = document.getElementById(`${product.name}-shelved`);
 
       if (shelfItem) {
-        shelfItem.scrollIntoView({ behavior: 'smooth' })
+        shelfItem.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
         if (productItem) {
-          productItem.scrollIntoView({ behavior: 'smooth' });
+          productItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }
     }
@@ -112,6 +113,32 @@ function SearchBar({
   );
 }
 
+/*
+const CATEGORIES = [
+  ["Water"],
+  ["Petfood"],
+  ["Tissues", "Shampoo"],
+  ["Diapers", "Babyfood"],
+  ["Detergent", "Cleaning Supplies", "Soap"],
+  ["Toilet Paper", "Paper Plates"],
+  ["Fish", "Vegtables", "Potato", "Breakfast"],
+  ["Meals", "International"],
+  ["Pizza", "TV Dinners", "Perogies"],
+  ["Ice Cream", "Bakery"],
+  ["Cereal", "Jam"],
+  ["Juice", "Coffie"],
+  ["Snacks", "Cookies"],
+  ["Soup", "Crackers"],
+  ["Canned Food"],
+  ["Indian", "Rice"],
+  ["Asian", "Jamacian", "Beans"],
+  ["Chips", "Nuts"],
+  ["Soda"],
+  ["Flour", "Baking", "Spices", "Sugar"],
+  ["Tomato", "Pasta", "Mexican", "Plastic"],
+  ["Oil", "Dressing", "Condiments"]
+];
+*/
 const CATEGORIES = [
   ["Water", "Petfood"],
   ["Tissues", "Shampoo"],
@@ -177,7 +204,7 @@ const PRODUCTS = [
 
 function Store({ aisleCategories }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "125vw", padding: '5vh 20vw' }}>
+    <div style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "100vh", padding: '5vh 20vw' }}>
       {aisleCategories.map((categories, index) => (
         <Aisle key={index} categories={categories} aisleNumber={index} />
       ))}
@@ -190,107 +217,130 @@ function Aisle({ key, categories, aisleNumber }) {
   const paddingLeft = aisleNumber % 2 === 1; // This is so every other aisle is back-to-back like in a store
 
   return (
-    <div key={key} style={{ display: 'flex', height: "100vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}>
-      {
-        categories.map((category, subIndex) => (
-          <Shelf key={category} category={category} />
-        ))
-      }
-    </div >
+    <div key={key} style={{ backgroundColor: '#cccccc', display: 'flex', height: "100vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}>
+      {categories.map((category, subIndex) => (
+        <Shelf key={category} category={category} />
+      ))}
+    </div>
   );
 }
 
 function Shelf({ key, category }) {
 
-  const [focused, setFocused] = useState(false);
-
-  function ShelvedProducts({ products }) {
-
-    const productImages = []
-
-    products.forEach(p => {
-
-      const id = `${p.name}-shelved`;
-
-      productImages.push(
-        <img key={id} id={id} src="https://static.vecteezy.com/system/resources/previews/021/952/562/original/tasty-hamburger-on-transparent-background-png.png" style={{ maxWidth: "100%", height: 'auto', border: '1px solid black' }}></img>
-      );
-    });
-
-    return productImages;
-
-  }
-
-  function FocusedShelf(category) {
-    const products = PRODUCTS.filter(p => p.category == category);
-    return <ShelvedProducts products={products} />
-  }
-
-  function UnfocusedShelf(category) {
-    return category;
-  }
-
-
-  return (
-    <button id={category} key={category} style={{ overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw" }} onClick={() => setFocused(!focused)}>
-      {focused ? FocusedShelf(category) : UnfocusedShelf(category)}
-    </button>
-  );
-}
-
-export default function App() {
-  console.log(CATEGORIES);
+  const products = PRODUCTS.filter(p => p.category == category);
 
   return (
     <>
-      <FilterableProductTable products={PRODUCTS} />
-      <Store aisleCategories={CATEGORIES} />
+      <button id={category} key={category} style={{ backgroundColor: '#cccccc', overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw" }}>
+        <ShelvedProducts products={products} />
+      </button>
+      <text style={{ textAlign: 'center', border: '1px solid black', marginBottom: '0.25vh' }} >{category}</text>
     </>
   );
 }
 
+function ShelvedProducts({ products }) {
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
+  function ProductModal() { // Saffran!!!
+    return (
+      <div>
+        {modalOpen && (
+          <div style={modalOverlayStyle} onClick={closeModal}>
+            <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
+              <span style={closeButtonStyle} onClick={closeModal}>&times;</span>
+              <p>This is the content of the modal.</p> {/* New Component */}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const productImages = []
+  products.forEach(p => {
+
+    const id = `${p.name}-shelved`;
+
+    productImages.push(
+      <button onClick={openModal}>
+        <img key={id} id={id} src="https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" style={{ maxWidth: "100%", height: 'auto' }}></img>
+
+        <ProductModal />
+      </button>
+    );
+  });
+
+  return productImages;
+
+}
 
 
-/*
-const PRODUCTS = [
-  {category: "Fruits", price: "$1", name: "Apple"},
-  {category: "Fruits", price: "$1", name: "Dragonfruit"},
-  {category: "Fruits", price: "$2", name: "Passionfruit"},
-  {category: "Vegetables", price: "$2", name: "Spinach"},
-  {category: "Vegetables", price: "$4", name: "Pumpkin"},
-  {category: "Vegetables", price: "$1", name: "Peas"},
-  {category: "Fruits", price: "$1", name: "Pear"},
-  {category: "Fruits", price: "$1", name: "Peach"},
-  {category: "Fruits", price: "$2", name: "Plumb"},
-  {category: "Vegetables", price: "$2", name: "Carrot"},
-  {category: "Vegetables", price: "$4", name: "Squash"},
-  {category: "Vegetables", price: "$1", name: "Beans"},
-];
-*/
+const modalOverlayStyle = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: 'rgba(0, 0, 0, 0.1)', // Semi-transparent overlay
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
-/*
-const CATEGORIES = [
-  ["Water"],
-  ["Petfood"],
-  ["Tissues", "Shampoo"],
-  ["Diapers", "Babyfood"],
-  ["Detergent", "Cleaning Supplies", "Soap"],
-  ["Toilet Paper", "Paper Plates"],
-  ["Fish", "Vegtables", "Potato", "Breakfast"],
-  ["Meals", "International"],
-  ["Pizza", "TV Dinners", "Perogies"],
-  ["Ice Cream", "Bakery"],
-  ["Cereal", "Jam"],
-  ["Juice", "Coffie"],
-  ["Snacks", "Cookies"],
-  ["Soup", "Crackers"],
-  ["Canned Food"],
-  ["Indian", "Rice"],
-  ["Asian", "Jamacian", "Beans"],
-  ["Chips", "Nuts"],
-  ["Soda"],
-  ["Flour", "Baking", "Spices", "Sugar"],
-  ["Tomato", "Pasta", "Mexican", "Plastic"],
-  ["Oil", "Dressing", "Condiments"]
-];
-*/
+const modalContentStyle = {
+  background: '#fff',
+  padding: '20px',
+  borderRadius: '8px',
+  position: 'relative',
+};
+
+const closeButtonStyle = {
+  position: 'absolute',
+  top: '10px',
+  right: '10px',
+  fontSize: '20px',
+  cursor: 'pointer',
+};
+
+
+function App() {
+  console.log(CATEGORIES);
+
+  return (
+    <>
+      <style>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #333333;
+          overflow-y: scroll; /* Always show vertical scrollbar */
+          scrollbar-width: thin; 
+          scrollbar-color: transparent transparent;
+        }
+
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background-color: transparent;
+        }
+
+        ::-webkit-scrollbar-track {
+          background-color: #333333; /* Adjust this color as needed */
+        }
+      `}</style>
+      <div>
+        <FilterableProductTable products={PRODUCTS} />
+        <Store aisleCategories={CATEGORIES} />
+      </div>
+    </>
+  );
+}
+
+export default App;
