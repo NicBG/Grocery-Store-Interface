@@ -29,10 +29,10 @@ function ProductRow({ product }) {
       const productItem = document.getElementById(`${product.name}-shelved`);
 
       if(shelfItem) {
-        shelfItem.scrollIntoView({behavior: 'smooth', block: 'center'})
+        shelfItem.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'})
 
         if(productItem) {
-          productItem.scrollIntoView({behavior: 'smooth', block: 'center'});
+          productItem.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
         }
       }
     }
@@ -191,6 +191,19 @@ const PRODUCTS = [
 ];
 
 function Store({aisleCategories}) {
+
+  const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    // Set a timeout to start scrolling after 3000 milliseconds (3 seconds)
+    const timeoutId = setTimeout(() => {
+      setScrolling(true);
+    }, 1000);
+
+    // Clear the timeout to avoid triggering the scrolling if the component unmounts
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   return (
     <div style={{display: 'flex', flexDirection: 'row', width: '125vw', height: "100vh", padding: '5vh 20vw'}}>
       {aisleCategories.map((categories, index) => (
@@ -205,7 +218,7 @@ function Aisle({key, categories, aisleNumber}) {
   const paddingLeft = aisleNumber % 2 === 1; // This is so every other aisle is back-to-back like in a store
 
   return (
-      <div key={key} style={{backgroundColor: '#cccccc', display: 'flex', height: "100vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%"}}>
+      <div key={key} style={{ display: 'flex', height: "100vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%"}}>
         {categories.map((category, subIndex) => (
           <Shelf key={category} category={category}/>
         ))}
@@ -219,7 +232,7 @@ function Shelf({key, category}) {
 
   return (
     <>
-      <button id={category} key={category} style={{backgroundColor: '#cccccc', overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw"}}>
+      <button id={category} key={category} style={{overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw"}}>
           <ShelvedProducts products={products}/>
       </button>
       <text style={{textAlign: 'center', border: '1px solid black', marginBottom: '0.25vh'}} >{category}</text>
@@ -296,33 +309,10 @@ const closeButtonStyle = {
 };
 
 
-function App() {
-  console.log(CATEGORIES);
-  
+export default function App() {
+
   return (
     <>
-      <style>{`
-        body {
-          margin: 0;
-          padding: 0;
-          background-color: #333333;
-          overflow-y: scroll; /* Always show vertical scrollbar */
-          scrollbar-width: thin; 
-          scrollbar-color: transparent transparent;
-        }
-
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-          background-color: transparent;
-        }
-
-        ::-webkit-scrollbar-track {
-          background-color: #333333; /* Adjust this color as needed */
-        }
-      `}</style>
       <div>
         <FilterableProductTable products={PRODUCTS}/>
         <Store aisleCategories={CATEGORIES}/>
@@ -330,5 +320,3 @@ function App() {
     </>
   );
 }
-
-export default App;
