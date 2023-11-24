@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+
 function FilterableProductTable({ products }) {
   const [filterText, setFilterText] = useState('');
   const [filterCategory, setFilterCategory] = useState(null);
@@ -28,10 +29,10 @@ function ProductRow({ product }) {
       const productItem = document.getElementById(`${product.name}-shelved`);
 
       if(shelfItem) {
-        shelfItem.scrollIntoView({behavior: 'smooth'})
+        shelfItem.scrollIntoView({behavior: 'smooth', block: 'center'})
 
         if(productItem) {
-          productItem.scrollIntoView({behavior: 'smooth'});
+          productItem.scrollIntoView({behavior: 'smooth', block: 'center'});
         }
       }
     }
@@ -100,22 +101,6 @@ function SearchBar({
     </form>
   );
 }
-/*
-const PRODUCTS = [
-  {category: "Fruits", price: "$1", name: "Apple"},
-  {category: "Fruits", price: "$1", name: "Dragonfruit"},
-  {category: "Fruits", price: "$2", name: "Passionfruit"},
-  {category: "Vegetables", price: "$2", name: "Spinach"},
-  {category: "Vegetables", price: "$4", name: "Pumpkin"},
-  {category: "Vegetables", price: "$1", name: "Peas"},
-  {category: "Fruits", price: "$1", name: "Pear"},
-  {category: "Fruits", price: "$1", name: "Peach"},
-  {category: "Fruits", price: "$2", name: "Plumb"},
-  {category: "Vegetables", price: "$2", name: "Carrot"},
-  {category: "Vegetables", price: "$4", name: "Squash"},
-  {category: "Vegetables", price: "$1", name: "Beans"},
-];
-*/
 
 /*
 const CATEGORIES = [
@@ -207,7 +192,7 @@ const PRODUCTS = [
 
 function Store({aisleCategories}) {
   return (
-    <div style={{display: 'flex', flexDirection: 'row', width: '125vw', height: "125vw", padding: '5vh 20vw'}}>
+    <div style={{display: 'flex', flexDirection: 'row', width: '125vw', height: "100vh", padding: '5vh 20vw'}}>
       {aisleCategories.map((categories, index) => (
         <Aisle key={index} categories={categories} aisleNumber={index}/>
       ))}
@@ -230,49 +215,96 @@ function Aisle({key, categories, aisleNumber}) {
 
 function Shelf({key, category}) {
 
-  const [focused, setFocused] = useState(false);
-
-  function ShelvedProducts({products}) {
-
-    const productImages = []
-
-    products.forEach(p => {
-      
-      const id = `${p.name}-shelved`;
-
-      productImages.push(
-        <img key={id} id={id} src="https://static.vecteezy.com/system/resources/previews/021/952/562/original/tasty-hamburger-on-transparent-background-png.png" style={{maxWidth: "100%", height: 'auto', border: '1px solid black'}}></img>
-      );
-    });
-
-    return productImages;
-    
-  }
-
-  function FocusedShelf(category) {
-    const products = PRODUCTS.filter(p => p.category == category);
-    return <ShelvedProducts products={products}/>
-  }
-
-  function UnfocusedShelf(category) {
-    return category;
-  }
-
+  const products = PRODUCTS.filter(p => p.category == category);
 
   return (
-    <button id={category} key={category} style={{overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw"}} onClick={() => setFocused(!focused)}>
-        {focused ? FocusedShelf(category) : UnfocusedShelf(category)}
+    <>
+      <button id={category} key={category} style={{overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw"}}>
+          <ShelvedProducts products={products}/>
       </button>
+      <text style={{textAlign: 'center', border: '1px solid black', marginBottom: '0.25vh'}} >{category}</text>
+     </>
   );
 }
+
+function ShelvedProducts({products}) {
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
+  function ProductModal() { // Saffran!!!
+    return (
+      <div>
+        {modalOpen && (
+          <div style={modalOverlayStyle} onClick={closeModal}>
+            <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
+              <span style={closeButtonStyle} onClick={closeModal}>&times;</span>
+              <p>This is the content of the modal.</p> {/* New Component */}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const productImages = []
+  products.forEach(p => {
+    
+    const id = `${p.name}-shelved`;
+
+    productImages.push(
+      <button onClick={openModal}>
+        <img key={id} id={id} src="https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" style={{maxWidth: "100%", height: 'auto'}}></img>
+
+        <ProductModal/>
+      </button>
+    );
+  });
+
+  return productImages;
+  
+}
+
+
+const modalOverlayStyle = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: 'rgba(0, 0, 0, 0.1)', // Semi-transparent overlay
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
+
+const modalContentStyle = {
+  background: '#fff',
+  padding: '20px',
+  borderRadius: '8px',
+  position: 'relative',
+};
+
+const closeButtonStyle = {
+  position: 'absolute',
+  top: '10px',
+  right: '10px',
+  fontSize: '20px',
+  cursor: 'pointer',
+};
+
 
 export default function App() {
   console.log(CATEGORIES);
 
   return (
     <>
-      <FilterableProductTable products={PRODUCTS}/>
-      <Store aisleCategories={CATEGORIES}/>
+      <div>
+        <FilterableProductTable products={PRODUCTS}/>
+        <Store aisleCategories={CATEGORIES}/>
+      </div>
     </>
   );
 }
