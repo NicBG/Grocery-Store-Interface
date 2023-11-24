@@ -19,14 +19,33 @@ function FilterableProductTable({ products }) {
 }
 
 function ProductRow({ product }) {
+
+  const [scrollToComponent, setScrollComponent] = useState(false);
+
+  useEffect(() => {
+    if(scrollToComponent) {
+      const shelfItem = document.getElementById(`${product.category}`);
+      const productItem = document.getElementById(`${product.name}-shelved`);
+
+      if(shelfItem) {
+        shelfItem.scrollIntoView({behavior: 'smooth'})
+
+        if(productItem) {
+          productItem.scrollIntoView({behavior: 'smooth'});
+        }
+      }
+    }
+
+    setScrollComponent(false);
+  }, [scrollToComponent]);
+
   const name = product.stocked ? product.name :
     <span>
       {product.name}
     </span>;
 
   function handleClick() {
-    const productImage = document.getElementById(`${name}-shelved`);
-    productImage.scrollIntoView({behavior: 'smooth'});
+    setScrollComponent(true);
   }
 
   return (
@@ -217,9 +236,14 @@ function Shelf({key, category}) {
 
     const productImages = []
 
-    products.forEach(p => productImages.push(
-      <img id={`${p.name}-shelved`} src="https://static.vecteezy.com/system/resources/previews/021/952/562/original/tasty-hamburger-on-transparent-background-png.png" style={{maxWidth: "100%", height: 'auto', border: '1px solid black'}}></img>)
-    );
+    products.forEach(p => {
+      
+      const id = `${p.name}-shelved`;
+
+      productImages.push(
+        <img key={id} id={id} src="https://static.vecteezy.com/system/resources/previews/021/952/562/original/tasty-hamburger-on-transparent-background-png.png" style={{maxWidth: "100%", height: 'auto', border: '1px solid black'}}></img>
+      );
+    });
 
     return productImages;
     
@@ -236,7 +260,7 @@ function Shelf({key, category}) {
 
 
   return (
-    <button key={category} style={{overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw"}} onClick={() => setFocused(!focused)}>
+    <button id={category} key={category} style={{overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw"}} onClick={() => setFocused(!focused)}>
         {focused ? FocusedShelf(category) : UnfocusedShelf(category)}
       </button>
   );
