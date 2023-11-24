@@ -142,12 +142,13 @@ const CATEGORIES = [
   ["Tomato", "Pasta", "Mexican", "Plastic"],
   ["Oil", "Dressing", "Condiments"]
 ];
+*/
 
-function Store({aisleCategories}) {
+function Store({ aisleCategories }) {
   return (
-    <div style={{display: 'flex', flexDirection: 'row', width: '125vw', height: "125vw", padding: '5vh 20vw'}}>
+    <div style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "125vw", padding: '5vh 20vw' }}>
       {aisleCategories.map((categories, index) => (
-        <Aisle key={index} categories={categories} aisleNumber={index}/>
+        <Aisle key={index} categories={categories} aisleNumber={index} />
       ))}
     </div>
   );
@@ -158,13 +159,13 @@ function Aisle({ key, categories, aisleNumber }) {
   const paddingLeft = aisleNumber % 2 === 1; // This is so every other aisle is back-to-back like in a store
 
   return (
-      <div key={key} style={{ display: 'flex', height: "100vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%"}}>
-{
-  categories.map((category, subIndex) => (
-    <Shelf key={category} category={category} />
-  ))
-}
-      </div >
+    <div key={key} style={{ display: 'flex', height: "100vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}>
+      {
+        categories.map((category, subIndex) => (
+          <Shelf key={category} category={category} />
+        ))
+      }
+    </div >
   );
 }
 
