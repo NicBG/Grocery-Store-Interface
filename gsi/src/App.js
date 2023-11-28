@@ -1,5 +1,68 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+const CATEGORIES = [
+  ["Water", "Petfood"],
+  ["Tissues", "Shampoo"],
+  ["Diapers", "Babyfood"],
+  ["Detergent", "Cleaning Supplies", "Soap"],
+  ["Toilet Paper", "Paper Plates"],
+  ["Fish", "Vegtables", "Potato", "Breakfast"],
+  ["Meals", "International"],
+  ["Pizza", "TV Dinners", "Perogies"],
+  ["Ice Cream", "Bakery"],
+  ["Cereal", "Jam"],
+  ["Juice", "Coffie"],
+  ["Snacks", "Cookies"],
+  ["Soup", "Crackers"],
+  ["Canned Food"],
+  ["Indian", "Rice"],
+  ["Asian", "Jamacian", "Beans"],
+  ["Chips", "Nuts"],
+  ["Soda"],
+  ["Flour", "Baking", "Spices", "Sugar"],
+  ["Tomato", "Pasta", "Mexican", "Plastic"],
+  ["Oil", "Dressing", "Condiments"]
+];
+
+const PRODUCTS = [
+  // Water
+  { name: "Bottled Water 500ml", price: 1.99, category: "Water", ratings: "4", description: "Fresh Taste", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Spring Water 1L", price: 2.49, category: "Water", ratings: "5", description: "Natural Spring", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Mineral Water 750ml", price: 1.79, category: "Water", ratings: "3", description: "Rich Minerals", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Purified Water 1.5L", price: 2.99, category: "Water", ratings: "4", description: "Pure Hydration", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Sparkling Water 330ml", price: 1.49, category: "Water", ratings: "3", description: "Lively Bubbles", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Coconut Water 500ml", price: 2.29, category: "Water", ratings: "5", description: "Tropical Feel", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Flavored Watermelon Water", price: 2.79, category: "Water", ratings: "4", description: "Fruity Splash", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Alkaline Water 1L", price: 3.99, category: "Water", ratings: "4", description: "Balanced pH", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Sport Electrolyte Water", price: 2.99, category: "Water", ratings: "5", description: "Energy Boost", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Artesian Water 750ml", price: 2.69, category: "Water", ratings: "3", description: "Smooth Taste", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+
+  // Petfood
+  { name: "Dry Dog Food 5kg", price: 12.99, category: "Petfood", ratings: "4", description: "Nutritious Meal", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Canned Cat Food 400g", price: 1.49, category: "Petfood", ratings: "5", description: "Delicious Tuna", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Pet Treats Variety Pack", price: 5.99, category: "Petfood", ratings: "4", description: "Tasty Mix", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Premium Catnip", price: 3.99, category: "Petfood", ratings: "3", description: "Cats Love It", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Grain-Free Dog Treats", price: 4.49, category: "Petfood", ratings: "5", description: "Healthy Snack", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Wet Puppy Food 300g", price: 2.99, category: "Petfood", ratings: "4", description: "Puppy Favorite", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Fish Flavored Cat Litter", price: 7.99, category: "Petfood", ratings: "3", description: "Odor Control", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Small Animal Hay 1kg", price: 6.49, category: "Petfood", ratings: "4", description: "Natural Hay", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Bird Seed Mix", price: 4.99, category: "Petfood", ratings: "5", description: "Birds' Delight", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Natural Rawhide Bones", price: 8.99, category: "Petfood", ratings: "4", description: "Chewy Fun", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+
+  // Tissues, Shampoo
+  { name: "Facial Tissues 3-Ply", price: 1.79, category: "Tissues", ratings: "4", description: "Soft Touch", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Pocket-Sized Tissue Pack", price: 0.99, category: "Tissues", ratings: "5", description: "Convenient Pack", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Aloe Vera Shampoo 500ml", price: 5.99, category: "Shampoo", ratings: "4", description: "Soothing Cleanse", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Anti-Dandruff Shampoo 250ml", price: 4.49, category: "Shampoo", ratings: "3", description: "Dandruff Control", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Moisturizing Body Wash", price: 6.99, category: "Shampoo", ratings: "5", description: "Hydrating Formula", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Scented Bath Bombs Set", price: 9.99, category: "Shampoo", ratings: "4", description: "Relaxing Scents", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Gentle Baby Shampoo 200ml", price: 3.99, category: "Shampoo", ratings: "5", description: "Mild Care", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Hypoallergenic Baby Wipes", price: 2.49, category: "Shampoo", ratings: "3", description: "Gentle Cleaning", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Exfoliating Shower Gel", price: 7.49, category: "Shampoo", ratings: "4", description: "Deep Exfoliation", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" },
+  { name: "Organic Lavender Soap", price: 4.99, category: "Shampoo", ratings: "5", description: "Soothing Lavender", image: "https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" }
+];
+
+
 
 function FilterableProductTable({ products }) {
   const [filterText, setFilterText] = useState('');
@@ -135,6 +198,7 @@ function SearchBar({
           //border: '1px solid black',
           boxShadow: '4px 4px 6px red',
           //fontSize: '18px',
+          zIndex: '1000'
         }}
 
       >Clear</button>
@@ -169,157 +233,124 @@ const CATEGORIES = [
   ["Oil", "Dressing", "Condiments"]
 ];
 */
-const CATEGORIES = [
-  ["Water", "Petfood"],
-  ["Tissues", "Shampoo"],
-  ["Diapers", "Babyfood"],
-  ["Detergent", "Cleaning Supplies", "Soap"],
-  ["Toilet Paper", "Paper Plates"],
-  ["Fish", "Vegtables", "Potato", "Breakfast"],
-  ["Meals", "International"],
-  ["Pizza", "TV Dinners", "Perogies"],
-  ["Ice Cream", "Bakery"],
-  ["Cereal", "Jam"],
-  ["Juice", "Coffie"],
-  ["Snacks", "Cookies"],
-  ["Soup", "Crackers"],
-  ["Canned Food"],
-  ["Indian", "Rice"],
-  ["Asian", "Jamacian", "Beans"],
-  ["Chips", "Nuts"],
-  ["Soda"],
-  ["Flour", "Baking", "Spices", "Sugar"],
-  ["Tomato", "Pasta", "Mexican", "Plastic"],
-  ["Oil", "Dressing", "Condiments"]
-];
 
-const PRODUCTS = [
-  // Water
-  { name: "Bottled Water 500ml", price: 1.99, category: "Water" },
-  { name: "Spring Water 1L", price: 2.49, category: "Water" },
-  { name: "Mineral Water 750ml", price: 1.79, category: "Water" },
-  { name: "Purified Water 1.5L", price: 2.99, category: "Water" },
-  { name: "Sparkling Water 330ml", price: 1.49, category: "Water" },
-  { name: "Coconut Water 500ml", price: 2.29, category: "Water" },
-  { name: "Flavored Watermelon Water", price: 2.79, category: "Water" },
-  { name: "Alkaline Water 1L", price: 3.99, category: "Water" },
-  { name: "Sport Electrolyte Water", price: 2.99, category: "Water" },
-  { name: "Artesian Water 750ml", price: 2.69, category: "Water" },
-
-  // Petfood
-  { name: "Dry Dog Food 5kg", price: 12.99, category: "Petfood" },
-  { name: "Canned Cat Food 400g", price: 1.49, category: "Petfood" },
-  { name: "Pet Treats Variety Pack", price: 5.99, category: "Petfood" },
-  { name: "Premium Catnip", price: 3.99, category: "Petfood" },
-  { name: "Grain-Free Dog Treats", price: 4.49, category: "Petfood" },
-  { name: "Wet Puppy Food 300g", price: 2.99, category: "Petfood" },
-  { name: "Fish Flavored Cat Litter", price: 7.99, category: "Petfood" },
-  { name: "Small Animal Hay 1kg", price: 6.49, category: "Petfood" },
-  { name: "Bird Seed Mix", price: 4.99, category: "Petfood" },
-  { name: "Natural Rawhide Bones", price: 8.99, category: "Petfood" },
-
-  // Tissues, Shampoo
-  { name: "Facial Tissues 3-Ply", price: 1.79, category: "Tissues" },
-  { name: "Pocket-Sized Tissue Pack", price: 0.99, category: "Tissues" },
-  { name: "Aloe Vera Shampoo 500ml", price: 5.99, category: "Shampoo" },
-  { name: "Anti-Dandruff Shampoo 250ml", price: 4.49, category: "Shampoo" },
-  { name: "Moisturizing Body Wash", price: 6.99, category: "Shampoo" },
-  { name: "Scented Bath Bombs Set", price: 9.99, category: "Shampoo" },
-  { name: "Gentle Baby Shampoo 200ml", price: 3.99, category: "Shampoo" },
-  { name: "Hypoallergenic Baby Wipes", price: 2.49, category: "Shampoo" },
-  { name: "Exfoliating Shower Gel", price: 7.49, category: "Shampoo" },
-  { name: "Organic Lavender Soap", price: 4.99, category: "Shampoo" },
-];
-
-function Store({ aisleCategories }) {
-
-  const [scrolling, setScrolling] = useState(false);
-
-  useEffect(() => {
-    // Set a timeout to start scrolling after 3000 milliseconds (3 seconds)
-    const timeoutId = setTimeout(() => {
-      setScrolling(true);
-    }, 1000);
-
-    // Clear the timeout to avoid triggering the scrolling if the component unmounts
-    return () => clearTimeout(timeoutId);
-  }, []);
+function Store({ aisleCategories, addToWishlist }) {
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "100vh", padding: '5vh 20vw' }}>
+    <div
+
+      style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "85vh", padding: '5vh 20vw' }}
+    >
       {aisleCategories.map((categories, index) => (
-        <Aisle key={index} categories={categories} aisleNumber={index} />
+        <Aisle key={index} categories={categories} aisleNumber={index} addToWishlist={addToWishlist} />
       ))}
     </div>
   );
 }
 
-function Aisle({ key, categories, aisleNumber }) {
-
+function Aisle({ key, categories, aisleNumber, addToWishlist }) {
   const paddingLeft = aisleNumber % 2 === 1; // This is so every other aisle is back-to-back like in a store
 
   return (
-    <div key={key} style={{ display: 'flex', height: "100vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}>
+    <div
+      key={key} style={{ display: 'flex', height: "90vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}
+    >
       {categories.map((category, subIndex) => (
-        <Shelf key={category} category={category} />
+        <Shelf key={category} category={category} addToWishlist={addToWishlist} />
       ))}
     </div>
   );
 }
 
-function Shelf({ key, category }) {
+function Shelf({ key, category, addToWishlist }) {
 
   const products = PRODUCTS.filter(p => p.category == category);
 
   return (
     <>
       <button id={category} key={category} style={{ overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw" }}>
-        <ShelvedProducts products={products} />
+        <ShelvedProducts products={products} addToWishlist={addToWishlist} />
       </button>
-      <text style={{ textAlign: 'center', border: '1px solid black', marginBottom: '0.25vh' }} >{category}</text>
+      <text style={{ textAlign: 'center', border: '1px solid black', marginBottom: '0.25vh' }}
+      >{category} </text>
     </>
   );
 }
 
-function ShelvedProducts({ products }) {
 
+function ShelvedProducts({ products, addToWishlist }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const openModal = () => setModalOpen(true);
+  const openModal = (product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
+
   const closeModal = () => setModalOpen(false);
 
-  function ProductModal() { // Saffran!!!
-    return (
+  return (
+    <>
+      {products.map(product => (
+        <img
+          key={product.name}
+          src={product.image}
+          alt={product.name}
+          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer' }}
+          onClick={() => openModal(product)}
+        />
+      ))}
+      <ProductModal product={selectedProduct} isOpen={modalOpen} closeModal={closeModal} addToWishlist={addToWishlist} />
+    </>
+  );
+}
+
+
+function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
+  const [wishListedProduct, setwishListedProduct] = useState(null);
+
+
+  const handleAddToWishlist = () => {
+    addToWishlist(product);
+  };
+
+
+
+  // Function to render star ratings
+  const renderStars = () => {
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <span key={i} style={{ color: i < product.ratings ? 'gold' : 'grey', fontSize: '30px' }}>★</span>
+      );
+    }
+    return stars;
+  };
+
+
+  return (
+    <>
       <div>
-        {modalOpen && (
+        {isOpen && product && (
           <div style={modalOverlayStyle} onClick={closeModal}>
-            <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
+            <div style={{ ...modalContentStyle, display: 'flex' }} onClick={(e) => e.stopPropagation()}>
               <span style={closeButtonStyle} onClick={closeModal}>&times;</span>
-              <p>Work in progress :(</p> {/* New Component */}
+              <img src={product.image} alt={product.name} style={{ width: '50%', height: 'auto' }} />
+              <div style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <h1>{product.name}</h1>
+                <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>{renderStars()}</div>
+                <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}><h2>Price: ${product.price}</h2></div>
+                <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}><h3>Description: {product.description}</h3></div>
+                <button onClick={handleAddToWishlist} style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }}>Add to Wishlist</button>
+              </div>
             </div>
           </div>
         )}
       </div>
-    );
-  }
-
-  const productImages = []
-  products.forEach(p => {
-
-    const id = `${p.name}-shelved`;
-
-    productImages.push(
-      <button onClick={openModal}>
-        <img key={id} id={id} src="https://media.istockphoto.com/id/94567758/photo/baby-sumatran-orangutan-hanging-on-rope-against-white-background.jpg?s=612x612&w=0&k=20&c=BRdK1G6gVhaZ12A-zegLkJUHB9sFe_maSXTCrOjAPAQ=" style={{ maxWidth: "100%", height: 'auto' }}></img>
-
-        <ProductModal />
-      </button>
-    );
-  });
-
-  return productImages;
-
+    </>
+  );
 }
+
 
 
 const modalOverlayStyle = {
@@ -338,7 +369,7 @@ const modalContentStyle = {
   background: '#fff',
   padding: '20px',
   borderRadius: '8px',
-  position: 'relative',
+  position: 'relative'
 };
 
 const closeButtonStyle = {
@@ -350,13 +381,76 @@ const closeButtonStyle = {
 };
 
 
+
+function WishList({ wishlist }) {
+  const [showWishlist, setShowWishlist] = useState(false);
+
+  const toggleWishlist = () => {
+    setShowWishlist(!showWishlist);
+  };
+
+  return (
+    <>
+      <button onClick={toggleWishlist} style={{
+        padding: '10px',
+        borderRadius: '20px',
+        cursor: 'pointer',
+        position: 'fixed',
+        top: '10px',
+        right: '10px',
+        zIndex: 1000
+      }}>
+        View Wishlist
+      </button>
+
+      {showWishlist && (
+        <div style={modalOverlayStyle}>
+          <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
+            <span style={closeButtonStyle} onClick={toggleWishlist}>&times;</span>
+            <div style={{ overflowY: 'auto', maxHeight: '400px' }}> {/* Scrollable list */}
+              {wishlist.length === 0 ? (
+                <p>There's nothing in your wishlist.</p>
+              ) : (
+                wishlist.map((product, index) => (
+                  <div key={index} style={{ margin: '10px' }}>
+                    <p>{product.name}</p>
+                    {/*
+                      I will be working on it soon to make it more detailed -Safran 
+                    */}
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+
+
+
+
 export default function App() {
+
+  const [wishlist, setWishlist] = useState([]);
+
+  const addToWishlist = (product) => {
+    // Add product to wishlist if not already present
+    if (!wishlist.some(wishlistProduct => wishlistProduct.name === product.name)) {
+      setWishlist([...wishlist, product]);
+    }
+    console.log(wishlist);
+  };
+
 
   return (
     <>
       <div>
+        <WishList wishlist={wishlist} />
         <FilterableProductTable products={PRODUCTS} />
-        <Store aisleCategories={CATEGORIES} />
+        <Store aisleCategories={CATEGORIES} addToWishlist={addToWishlist} />
       </div>
     </>
   );
