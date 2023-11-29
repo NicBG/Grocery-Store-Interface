@@ -94,7 +94,15 @@
   transition: 0.5s;
 }
 
-.btn:hover {opacity: 1}
+
+.clicked:active{
+transform: scale(0.98);
+}
+
+.btn:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
 
 .scroll-arrow-left {
   left: 250px;
