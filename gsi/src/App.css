@@ -59,6 +59,7 @@
 /* Custom scrollbar styling */
 ::-webkit-scrollbar {
   width: 7px; /* Adjust the width of the scrollbar */
+  height: 7px;
 }
 
 
@@ -77,4 +78,31 @@
   background: #555;
 }
 
+.scroll-arrow {
+  position: fixed;
+  top: 20px; /* Adjust the positioning as needed */
+  width: 50px;
+  height: 30px;
+  background-color: transparent;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0.3;
+  transition: 0.5s;
+}
+
+.btn:hover {opacity: 1}
+
+.scroll-arrow-left {
+  left: 250px;
+  top: 50vh
+}
+
+.scroll-arrow-right {
+  right: 20px;
+  top: 50vh
+}
 

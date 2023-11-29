@@ -550,7 +550,7 @@ function WishList({ wishlist }) {
 }
 
 
-
+/*
 export default function App() {
 
   const [wishlist, setWishlist] = useState([]);
@@ -574,3 +574,126 @@ export default function App() {
     </>
   );
 }
+
+*/
+export default function App() {
+
+  const [wishlist, setWishlist] = useState([]);
+
+  const addToWishlist = (product) => {
+    // Add product to wishlist if not already present
+    if (!wishlist.some(wishlistProduct => wishlistProduct.name === product.name)) {
+      setWishlist([...wishlist, product]);
+    }
+    console.log(wishlist);
+  };
+
+  const [scrollInterval, setScrollInterval] = useState(null);
+  const [leftArrowColor, setLeftArrowColor] = useState('#000000');
+  const [rightArrowColor, setRightArrowColor] = useState('#000000');
+
+  const startScrolling = (direction) => {
+    const scrollAmount = 8; // Adjust the scroll amount as needed
+
+    setScrollInterval(setInterval(() => {
+      if (direction === 'left') {
+        setLeftArrowColor('#FF0000'); //once clicked, turns red
+        window.scrollBy(-scrollAmount, 0);
+      } else if (direction === 'right') {
+        setRightArrowColor('#FF0000'); //once clicked, turns red
+        window.scrollBy(scrollAmount, 0);
+      }
+    }, 16)); // Adjust the interval (in milliseconds) for smoother scrolling
+  };
+
+  const stopScrolling = () => {
+    setLeftArrowColor('#000000');
+    setRightArrowColor('#000000');
+    clearInterval(scrollInterval);
+    setScrollInterval(null);
+  };
+
+  return (
+    <>
+      <div
+        className="scroll-arrow btn scroll-arrow-left"
+        onMouseDown={() => startScrolling('left')}
+        onMouseUp={stopScrolling}
+        onMouseLeave={stopScrolling}
+      
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38">
+          <g data-name="20-Arrow Left">
+            <path d="M16 0a16 16 0 1 0 16 16A16 16 0 0 0 16 0zm0 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14z"
+                  fill={leftArrowColor}
+            />
+            <path d="m8.41 15 5.29-5.29-1.41-1.42-7 7a1 1 0 0 0 0 1.41l7 7 1.41-1.41L8.41 17H27v-2z"
+                  fill={leftArrowColor}
+            />
+          </g>
+        </svg>
+      </div>
+
+      <div
+        className="scroll-arrow btn scroll-arrow-right"
+        onMouseDown={() => startScrolling('right')}
+        onMouseUp={stopScrolling}
+        onMouseLeave={stopScrolling}
+    
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38">
+          <g data-name="19-Arrow Right">
+            <path d="M16 0a16 16 0 1 0 16 16A16 16 0 0 0 16 0zm0 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14z"
+                  fill={rightArrowColor}
+            />
+            <path d="m26.71 15.29-7-7-1.42 1.42 5.3 5.29H5v2h18.59l-5.29 5.29 1.41 1.41 7-7a1 1 0 0 0 0-1.41z"
+                  fill={rightArrowColor}
+            />
+            </g>
+        </svg>
+      </div>
+      <div>
+        <WishList wishlist={wishlist} />
+        <FilterableProductTable products={PRODUCTS} />
+        <Store aisleCategories={CATEGORIES} addToWishlist={addToWishlist} />
+      </div>
+    </>
+  );
+}
+
+/*
+body {
+        margin: 0;
+        padding: 0;
+        background-color: #FFFFFF;
+      }
+
+      
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 18px; 
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: transparent;
+      }
+
+      
+      body {
+        scrollbar-width: thin;
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background-color: #888;
+      }
+
+      body::-webkit-scrollbar-track {
+        background-color: #FFFFFF; 
+      }
+
+      body::-webkit-scrollbar-track-piece {
+        background-color: transparent;
+      }
+
+
+*/
