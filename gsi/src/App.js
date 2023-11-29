@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import './App.css';
 
 const CATEGORIES = [
   ["Water", "Petfood"],
@@ -73,12 +74,11 @@ function FilterableProductTable({ products }) {
   return (
     <div>
       <div style={{
-        position: 'fixed',
-        top: '3%',
-        left: '60%',
-        transform: 'translate(-50%, -50%)',
-        width: '100%',
-        textAlign: 'center'
+        position: 'fixed', // Keeps the element in the same place even when scrolling
+        top: '10px', // 10px from the top of the viewport
+        left: '50%', // Moves the left edge of the div to the center of the viewport
+        transform: 'translateX(-50%)', // Shifts the div back to the left by half its own width
+        zIndex: '10'
       }}>
         <SearchBar
           filterText={filterText}
@@ -124,17 +124,21 @@ function ProductRow({ product }) {
   }
 
   return (
-    <div style={{ background: 'white', border: "1px solid black", margin: "10px", cursor: 'pointer' }} onClick={() => handleClick()}>
-      <tr>
-        <td>{name}</td>
-      </tr>
-      <tr>
-        <td>{product.price}$</td>
-      </tr>
-      <tr>
-        <img src="https://static.vecteezy.com/system/resources/previews/021/952/562/original/tasty-hamburger-on-transparent-background-png.png" width="100" height="100" />
-      </tr>
-    </div>
+    <>
+      <div className='hide-scrollbar' style={{ background: 'white', border: "1px solid black", margin: "5px", cursor: 'pointer' }} onClick={() => handleClick()}>
+        <table className='hide-scrollbar'>
+          <tr>
+            <td>{name}</td>
+          </tr>
+          <tr>
+            <td>{product.price}$</td>
+          </tr>
+          <tr>
+            <img src="https://static.vecteezy.com/system/resources/previews/021/952/562/original/tasty-hamburger-on-transparent-background-png.png" width="100" height="100" />
+          </tr>
+        </table>
+      </div>
+    </>
   );
 }
 
@@ -153,7 +157,7 @@ function ProductTable({ products, filterText }) {
   });
 
   return (
-    <div style={{ overflow: 'auto', height: "750px", direction: "ltr" }}>
+    <div style={{ overflow: 'auto', height: 'auto', direction: "ltr", zIndex: '100' }}>
       <table>
         <tbody>{rows}</tbody>
       </table>
@@ -166,43 +170,36 @@ function SearchBar({
   onFilterTextChange,
 }) {
   return (
-    <form>
+    <form >
       <input
         type="text"
         value={filterText}
         placeholder="Search..."
         onChange={(e) => onFilterTextChange(e.target.value)}
         style={{
-          width: '30%',
+          flexGrow: 1, // Allows the input to grow and fill available space
           padding: '10px',
-          position: 'relative',
-          left: '-60px',
-          top: '-10px',
-          //margin: '0px 20px 10px 0px',
+          width: '700px',
           borderRadius: '20px',
           border: '1px solid black',
-          boxShadow: '4px 4px 6px red',
-          fontSize: '18px',
+          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.2)',
+          fontSize: '15px',
+          marginRight: '10px', // Adds some space between the input and the button
         }}
       />
       <button
         onClick={() => onFilterTextChange("")}
         style={{
-          width: '70px',
           padding: '10px',
-          position: 'relative',
-          left: '-30px',
-          top: '-10px',
-          //margin: '0px 20px 10px 0px',
+          border: '1px solid black',
           borderRadius: '30px',
-          //border: '1px solid black',
-          boxShadow: '4px 4px 6px red',
-          //fontSize: '18px',
-          zIndex: '1000'
+          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.2)',
+          cursor: 'pointer', // Changes cursor to pointer on hover
         }}
-
-      >Clear</button>
-    </form >
+      >
+        Clear
+      </button>
+    </form>
   );
 }
 
@@ -307,7 +304,6 @@ function ShelvedProducts({ products, addToWishlist }) {
 
 
 function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
-  const [wishListedProduct, setwishListedProduct] = useState(null);
 
 
   const handleAddToWishlist = () => {
@@ -335,7 +331,7 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
           <div style={modalOverlayStyle} onClick={closeModal}>
             <div style={{ ...modalContentStyle, display: 'flex' }} onClick={(e) => e.stopPropagation()}>
               <span style={closeButtonStyle} onClick={closeModal}>&times;</span>
-              <img src={product.image} alt={product.name} style={{ width: '50%', height: 'auto' }} />
+              <img src={product.image} alt={product.name} style={imageStyle} />
               <div style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <h1>{product.name}</h1>
                 <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>{renderStars()}</div>
@@ -359,10 +355,11 @@ const modalOverlayStyle = {
   left: 0,
   width: '100%',
   height: '100%',
-  background: 'rgba(0, 0, 0, 0.1)', // Semi-transparent overlay
+  background: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  zIndex: 1000
 };
 
 const modalContentStyle = {
@@ -381,7 +378,34 @@ const closeButtonStyle = {
 };
 
 
+const wishListOverlayStyle = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'start',
+  zIndex: 1000
+};
 
+const wishListContentStyle = {
+  background: 'rgba(0, 0, 0, 0.0)', //making it transparent while maintaining an effect, put rgba(0, 0, 0, 0.0) if you want to see the background
+  top: '-30px',
+  padding: '10px',
+  borderRadius: '8px',
+  position: 'relative'
+};
+
+const imageStyle = {
+  width: '50%', // Fixed width for the image
+  height: 'auto', // Maintain aspect ratio
+  marginRight: '10px' // Space between image and text
+};
+
+/////////
 function WishList({ wishlist }) {
   const [showWishlist, setShowWishlist] = useState(false);
 
@@ -389,44 +413,109 @@ function WishList({ wishlist }) {
     setShowWishlist(!showWishlist);
   };
 
+  const cardStyle = {
+    backgroundColor: 'white', // White background for each card
+    padding: '10px',    //inside content padding
+    margin: '40px 0',    //card padding with outside semi-transparent border
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Soft shadow for depth
+    borderRadius: '8px', // Rounded corners
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'start'
+  };
+
   return (
     <>
-      <button onClick={toggleWishlist} style={{
-        padding: '10px',
-        borderRadius: '20px',
-        cursor: 'pointer',
-        position: 'fixed',
-        top: '10px',
-        right: '10px',
-        zIndex: 1000
-      }}>
-        View Wishlist
-      </button>
+      <div style={{ display: 'flex' }}>
+        <button onClick={toggleWishlist} style={{
+          padding: '10px',
+          borderRadius: '20px',
+          cursor: 'pointer',
+          position: 'fixed',
+          top: '10px',
+          right: '10px'
+        }}>
+          View Wishlist
+        </button>
 
-      {showWishlist && (
-        <div style={modalOverlayStyle}>
-          <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
-            <span style={closeButtonStyle} onClick={toggleWishlist}>&times;</span>
-            <div style={{ overflowY: 'auto', maxHeight: '400px' }}> {/* Scrollable list */}
-              {wishlist.length === 0 ? (
-                <p>There's nothing in your wishlist.</p>
-              ) : (
-                wishlist.map((product, index) => (
-                  <div key={index} style={{ margin: '10px' }}>
-                    <p>{product.name}</p>
-                    {/*
-                      I will be working on it soon to make it more detailed -Safran 
-                    */}
-                  </div>
-                ))
-              )}
+        {showWishlist && (
+          <div className='hide-scrollbar' style={wishListOverlayStyle} onClick={toggleWishlist}>
+            <div style={wishListContentStyle} onClick={(e) => e.stopPropagation()}>
+              <div style={{ overflowY: 'auto', maxHeight: '100vh' }}> {/* Scrollable list */}
+                { /*<span style={closeButtonStyle} onClick={toggleWishlist}>&times;</span> */}
+                {wishlist.length === 0 ? (
+                  <p>There's nothing in your wishlist.</p>
+                ) : (
+                  wishlist.map((product, index) => (
+                    <div key={index} style={cardStyle}>
+                      <img src={product.image} alt={product.name} style={imageStyle} />
+                      <div>
+                        <p style={{ margin: 0 }}>{product.name}</p>
+                        {/* Additional product details can be added here */}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 }
+
+
+
+
+
+
+// function WishList({ wishlist }) {
+//   const [showWishlist, setShowWishlist] = useState(false);
+
+//   const toggleWishlist = () => {
+//     setShowWishlist(!showWishlist);
+//   };
+
+//   return (
+//     <>
+//       <button onClick={toggleWishlist} style={{
+//         padding: '10px',
+//         borderRadius: '20px',
+//         cursor: 'pointer',
+//         position: 'fixed',
+//         top: '10px',
+//         right: '10px',
+//         zIndex: 1000
+//       }}>
+//         View Wishlist
+//       </button>
+
+//       {showWishlist && (
+//         <div style={modalOverlayStyle}>
+//           <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
+//             <span style={closeButtonStyle} onClick={toggleWishlist}>&times;</span>
+//             <div style={{ overflowY: 'auto', maxHeight: '400px' }}> {/* Scrollable list */}
+//               {wishlist.length === 0 ? (
+//                 <p>There's nothing in your wishlist.</p>
+//               ) : (
+//                 wishlist.map((product, index) => (
+//                   <div key={index} style={{ margin: '10px' }}>
+//                     <img src={product.image} alt={product.name} style={{ width: '50%', height: 'auto' }} />
+//                     <p>{product.name}</p>
+//                     {/*
+//                       I will be working on it soon to make it more detailed -Safran 
+//                     */}
+//                   </div>
+//                 ))
+//               )}
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </>
+//   );
+// }
 
 
 
