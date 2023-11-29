@@ -153,7 +153,7 @@ function ProductTable({ products, filterText }) {
   });
 
   return (
-    <div style={{ overflow: 'auto', height: "750px", direction: "ltr" }}>
+    <div style={{ overflow: 'auto', height: "830px", direction: "ltr" }}>
       <table>
         <tbody>{rows}</tbody>
       </table>
@@ -239,7 +239,7 @@ function Store({ aisleCategories, addToWishlist }) {
   return (
     <div
 
-      style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "85vh", padding: '5vh 20vw' }}
+      style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "85vh", padding: '8vh 15vw' }}
     >
       {aisleCategories.map((categories, index) => (
         <Aisle key={index} categories={categories} aisleNumber={index} addToWishlist={addToWishlist} />
@@ -253,7 +253,7 @@ function Aisle({ key, categories, aisleNumber, addToWishlist }) {
 
   return (
     <div
-      key={key} style={{ display: 'flex', height: "90vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}
+      key={key} style={{ display: 'flex', height: "90vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '3vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}
     >
       {categories.map((category, subIndex) => (
         <Shelf key={category} category={category} addToWishlist={addToWishlist} />
@@ -268,7 +268,7 @@ function Shelf({ key, category, addToWishlist }) {
 
   return (
     <>
-      <button id={category} key={category} style={{ overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw" }}>
+      <button id={category} key={category} style={{ overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.2vw", marginTop: "0.3vw" }}>
         <ShelvedProducts products={products} addToWishlist={addToWishlist} />
       </button>
       <text style={{ textAlign: 'center', border: '1px solid black', marginBottom: '0.25vh' }}
@@ -396,8 +396,8 @@ function WishList({ wishlist }) {
         borderRadius: '20px',
         cursor: 'pointer',
         position: 'fixed',
-        top: '10px',
-        right: '10px',
+        bottom: '30px',
+        left: '60px',
         zIndex: 1000
       }}>
         View Wishlist
@@ -444,9 +444,128 @@ export default function App() {
     console.log(wishlist);
   };
 
+  const [scrollInterval, setScrollInterval] = useState(null);
+  const [leftArrowColor, setLeftArrowColor] = useState('#000000');
+  const [rightArrowColor, setRightArrowColor] = useState('#000000');
+
+  const startScrolling = (direction) => {
+    const scrollAmount = 8; // Adjust the scroll amount as needed
+
+    setScrollInterval(setInterval(() => {
+      if (direction === 'left') {
+        setLeftArrowColor('#FF0000');
+        window.scrollBy(-scrollAmount, 0);
+      } else if (direction === 'right') {
+        setRightArrowColor('#FF0000');
+        window.scrollBy(scrollAmount, 0);
+      }
+    }, 16)); // Adjust the interval (in milliseconds) for smoother scrolling
+  };
+
+  const stopScrolling = () => {
+    setLeftArrowColor('#000000');
+    setRightArrowColor('#000000');
+    clearInterval(scrollInterval);
+    setScrollInterval(null);
+  };
 
   return (
     <>
+      <style>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #FFFFFF;
+        }
+
+        /* WebKit (Chrome, Safari) */
+        ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px; /* Add this line for the horizontal scrollbar */
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background-color: transparent;
+        }
+
+        /* Firefox */
+        body {
+          scrollbar-width: thin;
+        }
+
+        body::-webkit-scrollbar-thumb {
+          background-color: transparent;
+        }
+
+        body::-webkit-scrollbar-track {
+          background-color: #FFFFFF; /* Adjust this color as needed */
+        }
+
+        body::-webkit-scrollbar-track-piece {
+          background-color: transparent;
+        }
+
+        .scroll-arrow {
+          position: fixed;
+          top: 20px; /* Adjust the positioning as needed */
+          width: 50px;
+          height: 30px;
+          background-color: #ffffff;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          z-index: 1000;
+        }
+
+        .scroll-arrow-left {
+          left: 250px;
+        }
+
+        .scroll-arrow-right {
+          right: 20px;
+        }
+
+      `}</style>
+
+      <div
+        className="scroll-arrow scroll-arrow-left"
+        onMouseDown={() => startScrolling('left')}
+        onMouseUp={stopScrolling}
+        onMouseLeave={stopScrolling}
+      
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38">
+          <g data-name="20-Arrow Left">
+            <path d="M16 0a16 16 0 1 0 16 16A16 16 0 0 0 16 0zm0 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14z"
+                  fill={leftArrowColor}
+            />
+            <path d="m8.41 15 5.29-5.29-1.41-1.42-7 7a1 1 0 0 0 0 1.41l7 7 1.41-1.41L8.41 17H27v-2z"
+                  fill={leftArrowColor}
+            />
+          </g>
+        </svg>
+      </div>
+
+      <div
+        className="scroll-arrow scroll-arrow-right"
+        onMouseDown={() => startScrolling('right')}
+        onMouseUp={stopScrolling}
+        onMouseLeave={stopScrolling}
+    
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38">
+          <g data-name="19-Arrow Right">
+            <path d="M16 0a16 16 0 1 0 16 16A16 16 0 0 0 16 0zm0 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14z"
+                  fill={rightArrowColor}
+            />
+            <path d="m26.71 15.29-7-7-1.42 1.42 5.3 5.29H5v2h18.59l-5.29 5.29 1.41 1.41 7-7a1 1 0 0 0 0-1.41z"
+                  fill={rightArrowColor}
+            />
+            </g>
+        </svg>
+      </div>
       <div>
         <WishList wishlist={wishlist} />
         <FilterableProductTable products={PRODUCTS} />
