@@ -421,7 +421,7 @@ function WishList({ wishlist }) {
     borderRadius: '8px', // Rounded corners
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'start'
+    justifyContent: 'center'
   };
 
   return (
@@ -450,7 +450,9 @@ function WishList({ wishlist }) {
                     <div key={index} style={cardStyle}>
                       <img src={product.image} alt={product.name} style={imageStyle} />
                       <div>
-                        <p style={{ margin: 0 }}>{product.name}</p>
+                        <h1 style={{ margin: 0 }}>{product.name}</h1>
+                        <button style={{ backgroundColor: 'orange', border: 'none', padding: '10px', marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}>Remove From Wishlist</button>
+                        <button style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }}>Take me there</button>
                         {/* Additional product details can be added here */}
                       </div>
                     </div>
