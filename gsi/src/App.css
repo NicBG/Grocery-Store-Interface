@@ -91,12 +91,33 @@
   cursor: pointer;
   z-index: 1000;
   opacity: 0.3;
-  transition: 0.5s;
+  transition: 0.5s
 }
 
+.wishlist-icon{
+width:80px;
+height:50px;
+/*background-color: transparent;*/
+fill: none;
+stroke:black;
+stroke-width: 3px
+}
 
-.clicked:active{
-transform: scale(0.98);
+.search-delete-icon{
+  width:45px;
+  height:30px;
+  stroke:black;
+  stroke-width: 0.5px
+}
+
+.search-delete-btn-clicked:active{
+  transform: scale(0.95);
+  stroke: red;
+  }
+
+.wishlist-btn-clicked:active{
+transform: scale(0.95);
+fill: red;
 }
 
 .btn:hover {

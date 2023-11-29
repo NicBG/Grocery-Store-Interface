@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
+import wishlisticon from './wishlist-svgrepo-com.svg';
 
 /*
 const CATEGORIES = [
@@ -243,40 +244,48 @@ function ProductTable({ products, filterText }) {
   );
 }
 
-function SearchBar({
-  filterText,
-  onFilterTextChange,
-}) {
+function SearchBar({ filterText, onFilterTextChange }) {
   return (
-    <form >
-      <input
-        type="text"
-        value={filterText}
-        placeholder="Search..."
-        onChange={(e) => onFilterTextChange(e.target.value)}
-        style={{
-          flexGrow: 1, // Allows the input to grow and fill available space
-          padding: '10px',
-          width: '700px',
-          borderRadius: '20px',
-          border: '1px solid black',
-          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.2)',
-          fontSize: '15px',
-          marginRight: '10px', // Adds some space between the input and the button
-        }}
-      />
-      <button
-        onClick={() => onFilterTextChange("")}
-        style={{
-          padding: '10px',
-          border: '1px solid black',
-          borderRadius: '30px',
-          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.2)',
-          cursor: 'pointer', // Changes cursor to pointer on hover
-        }}
-      >
-        Clear
-      </button>
+    <form>
+      <div style={{
+        display: 'flex', // Flex container to align input and button
+        alignItems: 'center', // Align items vertically in the center
+        borderRadius: '20px', // Rounded corners
+        border: '2px solid black', // Border like the input
+        boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.2)', // Shadow effect
+        width: '700px', // Width of the entire container
+        overflow: 'hidden' // Ensures the button stays within the container's border
+      }}>
+        <input
+          type="text"
+          value={filterText}
+          placeholder="Search..."
+          onChange={(e) => onFilterTextChange(e.target.value)}
+          style={{
+            flexGrow: 1, // Allows the input to grow and fill available space
+            padding: '10px',
+            border: 'none', // Removes border
+            borderRadius: '20px', // Rounded corners
+            fontSize: '15px',
+            outline: 'none' // Removes the outline on focus
+          }}
+        />
+        <button
+          onClick={() => onFilterTextChange("")}
+          style={{
+            padding: '0px',
+            border: 'none', // Removes border
+            backgroundColor: 'transparent', // Makes background transparent
+            cursor: 'pointer', // Changes cursor to pointer on hover
+            borderRadius: '0px 20px 20px 0px', // Rounded corners on the right side
+            marginRight: '-1px' // Aligns button with the container's border
+          }}
+        >
+          <svg className='search-delete-icon search-delete-btn-clicked' viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.23 9.78L15.01 12L17.23 14.22C17.52 14.51 17.52 14.99 17.23 15.28C17.08 15.43 16.89 15.5 16.7 15.5C16.51 15.5 16.32 15.43 16.17 15.28L13.95 13.06L11.73 15.28C11.58 15.43 11.39 15.5 11.2 15.5C11.01 15.5 10.82 15.43 10.67 15.28C10.38 14.99 10.38 14.51 10.67 14.22L12.89 12L10.67 9.78C10.38 9.49 10.38 9.01 10.67 8.72C10.96 8.43 11.44 8.43 11.73 8.72L13.95 10.94L16.17 8.72C16.46 8.43 16.94 8.43 17.23 8.72C17.52 9.01 17.52 9.49 17.23 9.78ZM21.32 7V17C21.32 17.96 20.54 18.75 19.57 18.75H7.64C7.02999 18.75 6.48 18.44 6.16 17.93L2.87 12.66C2.62 12.26 2.62 11.74 2.87 11.33L6.16 6.07C6.48 5.56 7.04 5.25 7.64 5.25H19.58C20.54 5.25 21.33 6.04 21.33 7H21.32ZM19.82 7C19.82 6.86 19.71 6.75 19.57 6.75H7.64C7.54999 6.75 7.47 6.79 7.43 6.87L4.22 12L7.43 17.13C7.48 17.2 7.56 17.25 7.64 17.25H19.58C19.72 17.25 19.83 17.14 19.83 17V7H19.82Z" fill="#000000" />
+          </svg>
+        </button>
+      </div>
     </form>
   );
 }
@@ -508,14 +517,17 @@ function WishList({ wishlist }) {
     <>
       <div style={{ display: 'flex' }}>
         <button onClick={toggleWishlist} style={{
-          padding: '10px',
-          borderRadius: '20px',
+          padding: '0px',
+          borderRadius: '0px',
           cursor: 'pointer',
           position: 'fixed',
           top: '10px',
-          right: '10px'
+          right: '10px',
+          background: 'transparent',
+          border: 'none'
         }}>
-          View Wishlist
+          <svg className='wishlist-icon wishlist-btn-clicked' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" ><path d="M9.06,25C7.68,17.3,12.78,10.63,20.73,10c7-.55,10.47,7.93,11.17,9.55a.13.13,0,0,0,.25,0c3.25-8.91,9.17-9.29,11.25-9.5C49,9.45,56.51,13.78,55,23.87c-2.16,14-23.12,29.81-23.12,29.81S11.79,40.05,9.06,25Z" />
+          </svg>
         </button>
 
         {showWishlist && (
@@ -620,15 +632,15 @@ export default function App() {
         onMouseDown={() => startScrolling('left')}
         onMouseUp={stopScrolling}
         onMouseLeave={stopScrolling}
-      
+
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38">
           <g data-name="20-Arrow Left">
             <path d="M16 0a16 16 0 1 0 16 16A16 16 0 0 0 16 0zm0 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14z"
-                  fill={leftArrowColor}
+              fill={leftArrowColor}
             />
             <path d="m8.41 15 5.29-5.29-1.41-1.42-7 7a1 1 0 0 0 0 1.41l7 7 1.41-1.41L8.41 17H27v-2z"
-                  fill={leftArrowColor}
+              fill={leftArrowColor}
             />
           </g>
         </svg>
@@ -639,17 +651,17 @@ export default function App() {
         onMouseDown={() => startScrolling('right')}
         onMouseUp={stopScrolling}
         onMouseLeave={stopScrolling}
-    
+
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38">
           <g data-name="19-Arrow Right">
             <path d="M16 0a16 16 0 1 0 16 16A16 16 0 0 0 16 0zm0 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14z"
-                  fill={rightArrowColor}
+              fill={rightArrowColor}
             />
             <path d="m26.71 15.29-7-7-1.42 1.42 5.3 5.29H5v2h18.59l-5.29 5.29 1.41 1.41 7-7a1 1 0 0 0 0-1.41z"
-                  fill={rightArrowColor}
+              fill={rightArrowColor}
             />
-            </g>
+          </g>
         </svg>
       </div>
       <div>
