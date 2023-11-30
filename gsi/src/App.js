@@ -123,7 +123,7 @@ const PRODUCTS = [
   { name: "Frozen Fish Sticks", price: 4.99, category: "Fish", image: "https://i5.walmartimages.com/asr/8664e28f-880f-4182-8f2c-76f2bccc2cfe.738cfc499d1b1fd04b38607ff88a02ec.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
   { name: "Potato", price: 0.99, category: "Vegtables", image: "https://www.dole.com/-/media/project/dole/produce-images/vegetables/potatoes_cut_web.png?rev=b1a051bd8a484f0fa16cb33d70f738d6&hash=2FD99C8B77805DF39C6AA4C8F0C2AA9C" },
   { name: "Whole Chicken", price: 8.99, category: "Meat", image: "https://static01.nyt.com/images/2020/05/01/science/01TB-CHICKEN/01TB-CHICKEN-videoSixteenByNine3000.jpg?year=2020&h=1688&w=3000&s=08d78bcca3d81952683068193e144be7e941d5e4711d1ab521355c31e30381b5&k=ZQJBKqZ0VN&tw=1" },
-  { name: "Bannana", price: 0.99, category: "Fruit", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/640px-Banana-Single.jpg" },
+  { name: "Banana", price: 0.99, category: "Fruit", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/640px-Banana-Single.jpg" },
   { name: "Pizza Starter Kit", price: 5.99, category: "Pizza", image: "https://i5.walmartimages.ca/images/Enlarge/665/658/6000204665658.jpg" },
   { name: "Club Soda", price: 1.99, category: "Soda", image: "https://canadadry.ca/wp-content/uploads/2021/02/Club-Soda-FR-Shadow.png" },
   { name: "Chocolate Ice Cream", price: 8.99, category: "Ice Cream", image: "https://www.haagen-dazs.ca/sites/default/files/2023-01/Haagen-Dazs%20Chocolate%208x450ml%20CA%20%28EA%29downsized.png" },
@@ -151,27 +151,45 @@ const PRODUCTS = [
 function FilterableProductTable({ products }) {
   const [filterText, setFilterText] = useState('');
   const [filterCategory, setFilterCategory] = useState(null);
+  const [isSearchBarClicked, setIsSearchBarClicked] = useState(false);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+
+  const handleFilterTextChange = (newFilterText) => {
+    setFilterText(newFilterText);
+  };
+
+  const handleSearchBarClick = () => {
+    if(!isSearchBarClicked && !isButtonClicked){
+      setIsSearchBarClicked(!isSearchBarClicked);
+    }
+  };
+
+  const handleButtonClick = () => {
+    setIsButtonClicked(!isButtonClicked);
+  }
 
   // <div style={{position: 'absolute', height: '750px', width: "500px", overflow: 'auto', direction: 'ltr'}}></div>
 
   return (
     <div>
       <div style={{
+        
         position: 'fixed', // Keeps the element in the same place even when scrolling
         top: '10px', // 10px from the top of the viewport
         left: '50%', // Moves the left edge of the div to the center of the viewport
         transform: 'translateX(-50%)', // Shifts the div back to the left by half its own width
         zIndex: '10'
+        
       }}>
         <SearchBar
           filterText={filterText}
-          onFilterTextChange={setFilterText} />
+          onFilterTextChange={setFilterText}
+          isSearchBarClicked={isSearchBarClicked}
+          onSearchBarClick={handleSearchBarClick}
+          isButtonClicked={isButtonClicked}
+          onButtonClick={handleButtonClick} />
       </div>
-      <div style={{ position: 'fixed' }}>
-        <ProductTable
-          products={products}
-          filterText={filterText} />
-      </div>
+      
     </div>
   );
 }
@@ -221,33 +239,79 @@ function ProductRow({ product }) {
   );
 }
 
-function ProductTable({ products, filterText }) {
-  const rows = [];
+function ProductTable({ products, filterText, isSearchBarClicked }) {
+  const [opacity, setOpacity] = useState(0);
+  const [animatedProducts, setAnimatedProducts] = useState([products]);
+  const [showBar, setShowBar] = useState('hidden');
 
-  products.forEach((product) => {
-    if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
-      return;
+  useEffect(() => {
+    if (isSearchBarClicked) {
+      // If search bar is clicked, fade in
+      setOpacity(1);
+
+      const timeoutIds = products.map((product, index) => {
+        return setTimeout(() => {
+          setAnimatedProducts((prevProducts) => [...prevProducts, product]);
+        }, index * 300); // Delay increases for each product
+      });
+      setShowBar('auto');
+      document.body.classList.add('body-margin-35');
+      
+      return () => {
+        // Clear the timeouts to avoid memory leaks
+        timeoutIds.forEach((timeoutId) => clearTimeout(timeoutId));
+      };
+      
+    } else {
+      // If search bar is not clicked, fade out
+      setOpacity(0);
+      setAnimatedProducts([]); // Reset animated products
+      setShowBar('hidden');
+      document.body.classList.remove('body-margin-35');
     }
-    rows.push(
+  }, [isSearchBarClicked, products]);
+  
+  const rows = products
+    .filter((product) => product.name.toLowerCase().indexOf(filterText.toLowerCase()) !== -1)
+    .map((product) => (
       <ProductRow
         product={product}
-        key={product.name} />
-    );
-  });
+        key={product.name}
+      />
+    ));
+
+  const tableContainerStyle = {
+    overflowY: showBar, // Apply vertical scrollbar
+    height: '98vh',
+    width: '25vh',
+    direction: 'ltr',
+    zIndex: '100',
+    marginLeft: '-600px',
+    marginTop: '-70px',
+    
+  };
+
+  const tableStyle = {
+    opacity: opacity,
+    transition: 'opacity 0.5s ease-in-out',
+    overflowY: 'hidden',
+  };
 
   return (
-    <div style={{ overflow: 'auto', height: '98vh', direction: "ltr", zIndex: '100' }}>
-      <table className='hide-scrollbar'>
+    <div style={tableContainerStyle}>
+      <table style={tableStyle} className='hide-scrollbar'>
         <tbody>{rows}</tbody>
       </table>
     </div>
   );
 }
 
-function SearchBar({ filterText, onFilterTextChange }) {
+function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearchBarClick, isButtonClicked, onButtonClick }) {
   return (
     <form>
-      <div style={{
+      <div
+        onClick={onSearchBarClick} 
+        style={{
         display: 'flex', // Flex container to align input and button
         alignItems: 'center', // Align items vertically in the center
         borderRadius: '20px', // Rounded corners
@@ -255,6 +319,7 @@ function SearchBar({ filterText, onFilterTextChange }) {
         boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.2)', // Shadow effect
         width: '700px', // Width of the entire container
         overflow: 'hidden' // Ensures the button stays within the container's border
+
       }}>
         <input
           type="text"
@@ -286,6 +351,31 @@ function SearchBar({ filterText, onFilterTextChange }) {
           </svg>
         </button>
       </div>
+      
+      {isSearchBarClicked && <div>
+        <button
+          onClick={onButtonClick} 
+          style={{
+            padding: '1vw 2vh',
+            border: 'none', // Removes border
+            backgroundColor: 'transparent', // Makes background transparent
+            cursor: 'pointer', // Changes cursor to pointer on hover
+            marginLeft: '-370px',
+            marginTop: '-200px'
+          
+          }}
+        >
+          <svg className='search-delete-icon search-delete-btn-clicked' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm3.707,12.293a1,1,0,1,1-1.414,1.414L12,13.414,9.707,15.707a1,1,0,0,1-1.414-1.414L10.586,12,8.293,9.707A1,1,0,0,1,9.707,8.293L12,10.586l2.293-2.293a1,1,0,0,1,1.414,1.414L13.414,12Z"/>
+          </svg>
+        </button>
+      </div>}
+      {isSearchBarClicked && !isButtonClicked && <div>
+        {(
+          <ProductTable products={PRODUCTS} filterText={filterText} isSearchBarClicked={isSearchBarClicked} />
+        )}
+      </div> 
+      }
     </form>
   );
 }
@@ -347,14 +437,13 @@ function Aisle({ key, categories, aisleNumber, addToWishlist }) {
 }
 
 
-
 function Shelf({ key, category, addToWishlist }) {
 
   const products = PRODUCTS.filter(p => p.category == category);
 
   return (
     <>
-      <button id={category} key={category} style={{ overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw" }}>
+      <button id={category} key={category} style={{ overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw"}}>
         <ShelvedProducts products={products} addToWishlist={addToWishlist} />
       </button>
       <text style={{ textAlign: 'center', border: '1px solid black', marginBottom: '0.25vh' }}
@@ -589,7 +678,6 @@ export default function App() {
 
 */
 export default function App() {
-
   const [wishlist, setWishlist] = useState([]);
 
   const addToWishlist = (product) => {
@@ -599,6 +687,7 @@ export default function App() {
     }
     console.log(wishlist);
   };
+
 
   const [scrollInterval, setScrollInterval] = useState(null);
   const [leftArrowColor, setLeftArrowColor] = useState('#000000');

@@ -13,6 +13,8 @@
   }
 }
 
+
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -37,24 +39,19 @@
   }
 }
 
-/*
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-*/
-.hide-scrollbar {
-  /* Chrome, Safari, Opera */
-  ::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-
 .aisle-container > div:last-child {
   margin-right: 4vw;
 }
 
+body {
+  margin-left: -10vw;
+  transition: margin-left 0.5s ease-in-out; /* Add a transition for a smoother effect */
+  
+}
 
+.body-margin-35 {
+  margin-left: 3vw;
+}
 
 /* Custom scrollbar styling */
 ::-webkit-scrollbar {
@@ -94,6 +91,15 @@
   transition: 0.5s
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .wishlist-icon{
 width:80px;
 height:50px;
@@ -126,7 +132,7 @@ fill: red;
 }
 
 .scroll-arrow-left {
-  left: 250px;
+  left: 25px;
   top: 50vh
 }
 
