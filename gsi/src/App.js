@@ -197,15 +197,17 @@ function ProductRow({ product }) {
   }
 
   return (
-    <div style={{ background: 'white', border: "1px solid black", margin: "5px", cursor: 'pointer' }} onClick={() => handleClick()}>
+    <div style={{ background: 'white', border: "1px solid black", margin: "5px", borderRadius: '8px', cursor: 'pointer' }} onClick={() => handleClick()}>
       <tr>
-        <td>{name}</td>
+        <td style={{ fontWeight: 'bold', fontSize: '18px' }}>{name}</td>
       </tr>
       <tr>
-        <td>{product.price}$</td>
+        <td style={{ fontWeight: 'bold', fontSize: '13px' }}> {product.price}$</td>
       </tr>
       <tr>
-        <img src={product.image} width="100" height="100" />
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <img src={product.image} width="100" height="100" />
+        </div>
       </tr>
     </div>
   );
@@ -270,8 +272,10 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
 
   return (
     <div style={tableContainerStyle}>
-      <table style={tableStyle} className='hide-scrollbar'>
-        <tbody>{rows}</tbody>
+      <table style={tableStyle}>
+        <tbody>
+          {rows}
+        </tbody>
       </table>
     </div>
   );
@@ -304,7 +308,8 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
             border: 'none', // Removes border
             borderRadius: '20px', // Rounded corners
             fontSize: '15px',
-            outline: 'none' // Removes the outline on focus
+            outline: 'none', // Removes the outline on focus
+            background: 'transparent'
           }}
         />
         <button
@@ -318,7 +323,8 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
             backgroundColor: 'transparent', // Makes background transparent
             cursor: 'pointer', // Changes cursor to pointer on hover
             borderRadius: '0px 20px 20px 0px', // Rounded corners on the right side
-            marginRight: '-1px' // Aligns button with the container's border
+            marginRight: '-1px', // Aligns button with the container's border
+            background: 'transparent'
           }}
         >
           <svg className='search-delete-icon search-delete-btn-clicked' viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -404,7 +410,10 @@ function Aisle({ key, categories, aisleNumber, addToWishlist }) {
 
   return (
     <div
-      key={key} style={{ display: 'flex', height: "90vh", width: "10vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}
+      key={key} style={{
+        display: 'flex', height: "90vh", width: '20vw',/*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse",
+        justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%",
+      }}
     >
       {categories.map((category, subIndex) => (
         <Shelf key={category} category={category} addToWishlist={addToWishlist} />
@@ -420,10 +429,14 @@ function Shelf({ key, category, addToWishlist }) {
 
   return (
     <>
-      <button id={category} key={category} style={{ overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw" }}>
+      <button id={category} key={category} style={{
+        overflowY: 'auto', height: "100vh",
+        width: '10vw', maxHeight: "100%", maxWidth: "100%", border: 'none', borderRadius: '5px', background: 'rgba(200, 200, 225)',
+        marginBottom: "0.5vw"
+      }}>
         <ShelvedProducts products={products} addToWishlist={addToWishlist} />
       </button>
-      <text style={{ textAlign: 'center', border: '1px solid black', marginBottom: '0.25vh' }}
+      <text style={{ textAlign: 'center', border: '1px black', marginBottom: '0.25vh', borderRadius: '5px', background: 'rgba(200, 200, 255)' }}
       >{category} </text>
     </>
   );
@@ -448,7 +461,7 @@ function ShelvedProducts({ products, addToWishlist }) {
           key={product.name}
           src={product.image}
           alt={product.name}
-          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000' }}
+          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000' }} //change values here to modify the look of items inside each shelf
           onClick={() => openModal(product)}
         />
       ))}
@@ -459,8 +472,6 @@ function ShelvedProducts({ products, addToWishlist }) {
 
 
 function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
-
-
   const handleAddToWishlist = () => {
     addToWishlist(product);
   };
@@ -485,7 +496,7 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
         {isOpen && product && (
           <div style={modalOverlayStyle} onClick={closeModal}>
             <div style={{ ...modalContentStyle, display: 'flex' }} onClick={(e) => e.stopPropagation()}>
-              <span style={closeButtonStyle} onClick={closeModal}>&times;</span>
+              <span className='modal-button-clicked' style={closeButtonStyle} onClick={closeModal}>&times;</span>
               <img src={product.image} alt={product.name} style={imageStyle} />
               <div style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <h1>{product.name}</h1>
@@ -699,7 +710,7 @@ export default function App() {
   const [rightArrowColor, setRightArrowColor] = useState('#000000');
 
   const startScrolling = (direction) => {
-    const scrollAmount = 6; // Adjust the scroll amount as needed
+    const scrollAmount = 10; // Adjust the scroll amount as needed
 
     setScrollInterval(setInterval(() => {
       if (direction === 'left') {
