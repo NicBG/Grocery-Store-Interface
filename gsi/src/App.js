@@ -129,13 +129,13 @@ function FilterableProductTable({ products }) {
   };
 
   const handleSearchBarClick = () => {
-    if(!isSearchBarClicked){
+    if (!isSearchBarClicked) {
       setIsSearchBarClicked(!isSearchBarClicked);
     }
   };
 
   const handleButtonClick = () => {
-    if(isSearchBarClicked){
+    if (isSearchBarClicked) {
       setIsSearchBarClicked(!isSearchBarClicked);
       document.body.classList.remove('body-margin-35');
     }
@@ -152,7 +152,7 @@ function FilterableProductTable({ products }) {
         transform: 'translateX(-50%)', // Shifts the div back to the left by half its own width
         zIndex: 10,
         width: 1,
-        
+
       }}>
         <SearchBar
           filterText={filterText}
@@ -161,7 +161,7 @@ function FilterableProductTable({ products }) {
           onSearchBarClick={handleSearchBarClick}
           onButtonClick={handleButtonClick} />
       </div>
-      
+
     </div>
   );
 }
@@ -228,12 +228,12 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
       });
       setShowBar('auto');
       document.body.classList.add('body-margin-35');
-      
+
       return () => {
         // Clear the timeouts to avoid memory leaks
         timeoutIds.forEach((timeoutId) => clearTimeout(timeoutId));
       };
-      
+
     } else {
       // If search bar is not clicked, fade out
       document.body.classList.remove('body-margin-35');
@@ -242,7 +242,7 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
       setShowBar('hidden');
     }
   }, [isSearchBarClicked, products]);
-  
+
   const rows = products
     .filter((product) => product.name.toLowerCase().indexOf(filterText.toLowerCase()) !== -1)
     .map((product) => (
@@ -254,12 +254,12 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
 
   const tableContainerStyle = {
     overflowY: showBar, // Apply vertical scrollbar
-    height: '98vh',
-    width: '25vh',
+    height: '100vh',
+    width: '18vh',
     direction: 'ltr',
     marginLeft: '-48vw',
     marginTop: '-7vh',
-    
+
   };
 
   const tableStyle = {
@@ -281,18 +281,18 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
   return (
     <form>
       <div
-        onClick={onSearchBarClick} 
+        onClick={onSearchBarClick}
         style={{
-        display: 'flex', // Flex container to align input and button
-        alignItems: 'center', // Align items vertically in the center
-        borderRadius: '20px', // Rounded corners
-        border: '2px solid black', // Border like the input
-        boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.2)', // Shadow effect
-        width: '700px', // Width of the entire container
-        overflow: 'hidden', // Ensures the button stays within the container's border
-        marginLeft: '-400px',
+          display: 'flex', // Flex container to align input and button
+          alignItems: 'center', // Align items vertically in the center
+          borderRadius: '20px', // Rounded corners
+          border: '2px solid black', // Border like the input
+          boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.2)', // Shadow effect
+          width: '700px', // Width of the entire container
+          overflow: 'hidden', // Ensures the button stays within the container's border
+          marginLeft: '-400px',
 
-      }}>
+        }}>
         <input
           type="text"
           value={filterText}
@@ -326,10 +326,10 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
           </svg>
         </button>
       </div>
-      
+
       {isSearchBarClicked && <div>
         <button
-          onClick={onButtonClick} 
+          onClick={onButtonClick}
           style={{
             padding: '1vw 2vh',
             border: 'none', // Removes border
@@ -337,21 +337,21 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
             cursor: 'pointer', // Changes cursor to pointer on hover
             marginLeft: '-51vw',
             marginTop: '-20vh'
-          
+
           }}
         >
           <svg className='search-delete-icon search-delete-btn-clicked' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm3.707,12.293a1,1,0,1,1-1.414,1.414L12,13.414,9.707,15.707a1,1,0,0,1-1.414-1.414L10.586,12,8.293,9.707A1,1,0,0,1,9.707,8.293L12,10.586l2.293-2.293a1,1,0,0,1,1.414,1.414L13.414,12Z"/>
+            <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm3.707,12.293a1,1,0,1,1-1.414,1.414L12,13.414,9.707,15.707a1,1,0,0,1-1.414-1.414L10.586,12,8.293,9.707A1,1,0,0,1,9.707,8.293L12,10.586l2.293-2.293a1,1,0,0,1,1.414,1.414L13.414,12Z" />
           </svg>
         </button>
       </div>}
-      {isSearchBarClicked && 
-      <div style={{
-        position: 'flex', // Keeps the element in the same place even when scrolling            
-      }}
-      >
-        <ProductTable products={PRODUCTS} filterText={filterText} isSearchBarClicked={isSearchBarClicked} />
-      </div> 
+      {isSearchBarClicked &&
+        <div style={{
+          position: 'flex', // Keeps the element in the same place even when scrolling            
+        }}
+        >
+          <ProductTable products={PRODUCTS} filterText={filterText} isSearchBarClicked={isSearchBarClicked} />
+        </div>
       }
     </form>
   );
@@ -420,7 +420,7 @@ function Shelf({ key, category, addToWishlist }) {
 
   return (
     <>
-      <button id={category} key={category} style={{ overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw"}}>
+      <button id={category} key={category} style={{ overflowY: 'auto', width: "10vw", height: "100vh", maxHeight: "100%", maxWidth: "100%", border: '1px solid black', marginBottom: "0.25vw" }}>
         <ShelvedProducts products={products} addToWishlist={addToWishlist} />
       </button>
       <text style={{ textAlign: 'center', border: '1px solid black', marginBottom: '0.25vh' }}
@@ -444,7 +444,7 @@ function ShelvedProducts({ products, addToWishlist }) {
   return (
     <>
       {products.map(product => (
-        <img
+        <img className='modal-button-clicked'
           key={product.name}
           src={product.image}
           alt={product.name}
@@ -492,7 +492,7 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
                 <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>{renderStars()}</div>
                 <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}><h2>Price: ${product.price}</h2></div>
                 <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}><h3>Description: {product.description}</h3></div>
-                <button onClick={handleAddToWishlist} style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }}>Add to Wishlist</button>
+                <button className='modal-button-clicked' onClick={handleAddToWishlist} style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }}>Add to Wishlist</button>
               </div>
             </div>
           </div>
@@ -558,16 +558,16 @@ const imageStyle = {
   marginRight: '10px' // Space between image and text
 };
 
-  const cardStyle = {
-    backgroundColor: 'white', // White background for each card
-    padding: '10px',    //inside content padding
-    margin: '40px 0',    //card padding with outside semi-transparent border
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Soft shadow for depth
-    borderRadius: '8px', // Rounded corners
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
+const cardStyle = {
+  backgroundColor: 'white', // White background for each card
+  padding: '10px',    //inside content padding
+  margin: '40px 0',    //card padding with outside semi-transparent border
+  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Soft shadow for depth
+  borderRadius: '8px', // Rounded corners
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+};
 
 /////////
 function WishList({ wishlist }) {
@@ -604,8 +604,8 @@ function WishList({ wishlist }) {
                     <h3>There's nothing in your wishlist.</h3>
                   </div>
                 ) : (
-                  wishlist.map((product, index) => 
-                    <WishListItem product={product}/>
+                  wishlist.map((product, index) =>
+                    <WishListItem product={product} onTakeMeThere={toggleWishlist} />
                   )
                 )}
               </div>
@@ -617,7 +617,7 @@ function WishList({ wishlist }) {
   );
 }
 
-function WishListItem({product}) {
+function WishListItem({ product, onTakeMeThere }) {
 
   const [scrollToComponent, setScrollComponent] = useState(false);
 
@@ -643,8 +643,12 @@ function WishListItem({product}) {
       <img src={product.image} alt={product.name} style={imageStyle} />
       <div>
         <h1 style={{ margin: 0 }}>{product.name}</h1>
-        <button style={{ backgroundColor: 'orange', border: 'none', padding: '10px', marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}>Remove From Wishlist</button>
-        <button style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }} onClick={() => setScrollComponent(true)}>Take me there</button>
+        <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}>Remove From Wishlist</button>
+        <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }} onClick={() => {
+          setScrollComponent(true); setTimeout(() => {
+            onTakeMeThere();
+          }, 1);
+        }}>Take me there</button>
         {/* Additional product details can be added here */}
       </div>
     </div>
