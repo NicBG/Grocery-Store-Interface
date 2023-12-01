@@ -44,6 +44,7 @@
 }
 
 body {
+  background: #EDEDED;
   margin-left: -10vw;
   transition: margin-left 0.5s ease-in-out; /* Add a transition for a smoother effect */
   
@@ -100,6 +101,13 @@ body {
   }
 }
 
+.hide-scrollbar {
+  /* Chrome, Safari, Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .wishlist-icon{
 width:80px;
 height:50px;
@@ -125,6 +133,11 @@ stroke-width: 3px
 transform: scale(0.95);
 fill: red;
 }
+
+.modal-button-clicked:active{
+  transform: scale(0.95);
+}
+
 
 .btn:hover {
   opacity: 1;
