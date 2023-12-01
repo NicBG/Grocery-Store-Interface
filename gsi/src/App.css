@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Segoe UI';
 }
 
 .App-logo {
@@ -133,6 +134,10 @@ stroke-width: 3px
 transform: scale(0.95);
 fill: red;
 }
+
+.wishlist-btn{
+  fill: rgba(210,210,255);
+  }
 
 .modal-button-clicked:active{
   transform: scale(0.95);

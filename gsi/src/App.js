@@ -203,7 +203,9 @@ function ProductRow({ product }) {
   }
 
   return (
-    <div style={{ background: 'white', border: "1px solid black", margin: "5px", borderRadius: '8px', cursor: 'pointer' }} onClick={() => handleClick()}>
+    //-------------------------------------------------------------For side table color scheme, change the background here
+
+    <div style={{ background: 'rgba(210,210,255)', border: "1px solid black", margin: "5px", borderRadius: '8px', cursor: 'pointer' }} onClick={() => handleClick()}>
       <tr>
         <td style={{ fontWeight: 'bold', fontSize: '18px' }}>{name}</td>
       </tr>
@@ -289,6 +291,7 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
 
 function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearchBarClick, onButtonClick }) {
   return (
+    //-------------------------------------------------------------For search bar color scheme, change the background here
     <form>
       <div
         onClick={onSearchBarClick}
@@ -301,7 +304,7 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
           width: '700px', // Width of the entire container
           overflow: 'hidden', // Ensures the button stays within the container's border
           marginLeft: '-400px',
-
+          background: 'rgba(210, 210, 255)'
         }}>
         <input
           type="text"
@@ -315,7 +318,7 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
             borderRadius: '20px', // Rounded corners
             fontSize: '15px',
             outline: 'none', // Removes the outline on focus
-            background: 'transparent'
+            background: 'none'
           }}
         />
         <button
@@ -330,7 +333,7 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
             cursor: 'pointer', // Changes cursor to pointer on hover
             borderRadius: '0px 20px 20px 0px', // Rounded corners on the right side
             marginRight: '-1px', // Aligns button with the container's border
-            background: 'transparent'
+            background: 'none'
           }}
         >
           <svg className='search-delete-icon search-delete-btn-clicked' viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -434,15 +437,16 @@ function Shelf({ key, category, addToWishlist }) {
   const products = PRODUCTS.filter(p => p.category == category);
 
   return (
+    //-------------------------------------------------------------For shelves color scheme, change the background here
     <>
       <button id={category} key={category} style={{
         overflowY: 'auto', height: "100vh",
-        width: '10vw', maxHeight: "100%", maxWidth: "100%", border: 'none', borderRadius: '5px', background: 'rgba(200, 200, 225)',
+        width: '10vw', maxHeight: "100%", maxWidth: "100%", border: 'none', borderRadius: '5px', background: 'rgba(210, 210, 255)',
         marginBottom: "0.5vw"
       }}>
         <ShelvedProducts products={products} addToWishlist={addToWishlist} />
       </button>
-      <text style={{ textAlign: 'center', border: '1px black', marginBottom: '0.25vh', borderRadius: '5px', background: 'rgba(200, 200, 255)' }}
+      <text style={{ textAlign: 'center', border: '1px black', marginBottom: '0.25vh', borderRadius: '5px', background: 'rgba(210, 210, 255)' }}
       >{category} </text>
     </>
   );
@@ -608,7 +612,7 @@ function WishList({ wishlist }) {
           background: 'transparent',
           border: 'none'
         }}>
-          <svg className='wishlist-icon wishlist-btn-clicked' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" ><path d="M9.06,25C7.68,17.3,12.78,10.63,20.73,10c7-.55,10.47,7.93,11.17,9.55a.13.13,0,0,0,.25,0c3.25-8.91,9.17-9.29,11.25-9.5C49,9.45,56.51,13.78,55,23.87c-2.16,14-23.12,29.81-23.12,29.81S11.79,40.05,9.06,25Z" />
+          <svg className='wishlist-icon wishlist-btn-clicked wishlist-btn' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M9.06,25C7.68,17.3,12.78,10.63,20.73,10c7-.55,10.47,7.93,11.17,9.55a.13.13,0,0,0,.25,0c3.25-8.91,9.17-9.29,11.25-9.5C49,9.45,56.51,13.78,55,23.87c-2.16,14-23.12,29.81-23.12,29.81S11.79,40.05,9.06,25Z" />
           </svg>
         </button>
 
