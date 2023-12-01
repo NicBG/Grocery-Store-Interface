@@ -447,7 +447,7 @@ function ShelvedProducts({ products, addToWishlist }) {
           key={product.name}
           src={product.image}
           alt={product.name}
-          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000' }}
+          style={{ maxWidth: "100%", height: '100px', cursor: 'pointer', zIndex: '4000' }}
           onClick={() => openModal(product)}
         />
       ))}
@@ -457,13 +457,22 @@ function ShelvedProducts({ products, addToWishlist }) {
 }
 
 
-function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
-
+function ProductModal({ product, isOpen, closeModal, addToWishlist, removeFromWishlist, isOnWishlist  }) {
+  const [isButtonPressed, setIsButtonPressed] = useState(isOnWishlist);
+  const [buttonText, setButtonText] = useState(isOnWishlist ? 'Item added to wishlist' : 'Add to Wishlist');
 
   const handleAddToWishlist = () => {
-    addToWishlist(product);
-  };
+    if (isOnWishlist) {
+      removeFromWishlist(product);
+    } else {
+      addToWishlist(product);
+    }
 
+    // Toggle isButtonPressed when the button is clicked
+    setIsButtonPressed(!isButtonPressed);
+    // Update buttonText based on the updated state
+    setButtonText(isButtonPressed ? 'Add to Wishlist' : 'Item added to wishlist');
+  };
 
 
   // Function to render star ratings
@@ -477,6 +486,12 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
     return stars;
   };
 
+  const buttonStyle = {
+    backgroundColor: isButtonPressed ? 'lightgreen' : 'orange',
+    border: 'none',
+    padding: '10px',
+    cursor: 'pointer',
+  }
 
   return (
     <>
@@ -491,7 +506,12 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
                 <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>{renderStars()}</div>
                 <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}><h2>Price: ${product.price}</h2></div>
                 <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}><h3>Description: {product.description}</h3></div>
-                <button onClick={handleAddToWishlist} style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }}>Add to Wishlist</button>
+                <button 
+                  onClick={() => {
+                    handleAddToWishlist();
+                  }}
+                style={buttonStyle}>{buttonText}
+                </button>
               </div>
             </div>
           </div>
@@ -552,8 +572,10 @@ const wishListContentStyle = {
 };
 
 const imageStyle = {
-  width: '450px', // Fixed width for the image
-  height: '300px', // Maintain aspect ratio
+  maxWidth: '450px', 
+  maxHeight: '400px',
+  width: 'auto', // Fixed width for the image
+  height: 'auto', // Maintain aspect ratio
   marginRight: '10px' // Space between image and text
 };
 
