@@ -258,7 +258,7 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
     width: '25vh',
     direction: 'ltr',
     marginLeft: '-48vw',
-    marginTop: '-9vh',
+    marginTop: '-7vh',
     
   };
 
@@ -346,7 +346,10 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
         </button>
       </div>}
       {isSearchBarClicked && 
-      <div>
+      <div style={{
+        position: 'flex', // Keeps the element in the same place even when scrolling            
+      }}
+      >
         <ProductTable products={PRODUCTS} filterText={filterText} isSearchBarClicked={isSearchBarClicked} />
       </div> 
       }
