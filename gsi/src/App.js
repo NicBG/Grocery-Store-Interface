@@ -169,6 +169,7 @@ function FilterableProductTable({ products }) {
 function ProductRow({ product }) {
 
   const [scrollToComponent, setScrollComponent] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
     if (scrollToComponent) {
@@ -200,12 +201,25 @@ function ProductRow({ product }) {
 
   function handleClick() {
     setScrollComponent(true);
+    setIsSelected(true); // Toggle the selected state
+
+    // Set a timeout to unselect after a short delay (e.g., 500 milliseconds)
+    setTimeout(() => {
+      setIsSelected(false);
+    }, 100);
+
   }
 
   return (
     //-------------------------------------------------------------For side table color scheme, change the background here
 
-    <div style={{ background: 'rgba(210,210,255)', border: "1px solid black", margin: "5px", borderRadius: '8px', cursor: 'pointer' }} onClick={() => handleClick()}>
+    <div 
+      style={{ background: isSelected ? 'lightblue' : 'rgba(210,210,255)',
+        border: "1px solid black",
+        margin: "5px",
+        borderRadius: '8px',
+        cursor: 'pointer' }} 
+        onClick={() => handleClick()}>
       <tr>
         <td style={{ fontWeight: 'bold', fontSize: '18px' }}>{name}</td>
       </tr>
