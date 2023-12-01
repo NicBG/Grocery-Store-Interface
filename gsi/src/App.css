@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Segoe UI';
 }
 
 .App-logo {
@@ -44,6 +45,7 @@
 }
 
 body {
+  background: #EDEDED;
   margin-left: -10vw;
   transition: margin-left 0.5s ease-in-out; /* Add a transition for a smoother effect */
   
@@ -55,7 +57,7 @@ body {
 
 /* Custom scrollbar styling */
 ::-webkit-scrollbar {
-  width: 7px; /* Adjust the width of the scrollbar */
+  width: 5px; /* Adjust the width of the scrollbar */
   height: 7px;
 }
 
@@ -100,6 +102,13 @@ body {
   }
 }
 
+.hide-scrollbar {
+  /* Chrome, Safari, Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .wishlist-icon{
 width:80px;
 height:50px;
@@ -125,6 +134,15 @@ stroke-width: 3px
 transform: scale(0.95);
 fill: red;
 }
+
+.wishlist-btn{
+  fill: rgba(210,210,255);
+  }
+
+.modal-button-clicked:active{
+  transform: scale(0.95);
+}
+
 
 .btn:hover {
   opacity: 1;
