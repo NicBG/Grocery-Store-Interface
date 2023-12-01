@@ -200,21 +200,23 @@ function ProductRow({ product }) {
 
   function handleClick() {
     setScrollComponent(true);
+    /*
     setIsSelected(true); // Toggle the selected state
 
     // Set a timeout to unselect after a short delay (e.g., 500 milliseconds)
     setTimeout(() => {
       setIsSelected(false);
-    }, 100);
-
+    }, 1000);
+    */
   }
 
   return (
     //-------------------------------------------------------------For side table color scheme, change the background here
 
-    <div
+    <div className='items'
       style={{
-        background: isSelected ? 'lightblue' : 'rgba(210,210,255)',
+        //background: isSelected ? 'lightblue' : 'rgba(210,210,255)',
+        background: 'rgba(210,210,255)',
         border: "1px solid black",
         margin: "5px",
         borderRadius: '8px',
@@ -308,7 +310,7 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
   return (
     //-------------------------------------------------------------For search bar color scheme, change the background here
     <form>
-      <div
+      <div className='items'
         onClick={onSearchBarClick}
         style={{
           display: 'flex', // Flex container to align input and button
@@ -387,20 +389,20 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
   );
 }
 
-function Store({ aisleCategories, addToWishlist }) {
+function Store({ aisleCategories, addToWishlist, isProductInWishlist }) {
   //style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "80vh", padding: '9vh 15vw' }}
   return (
     <div
       style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "88vh", padding: '7vh 13vw 0vh' }}
     >
       {aisleCategories.map((categories, index) => (
-        <Aisle key={index} categories={categories} aisleNumber={index} addToWishlist={addToWishlist} />
+        <Aisle key={index} categories={categories} aisleNumber={index} addToWishlist={addToWishlist} isProductInWishlist={isProductInWishlist} />
       ))}
     </div>
   );
 }
 
-function Aisle({ key, categories, aisleNumber, addToWishlist }) {
+function Aisle({ key, categories, aisleNumber, addToWishlist, isProductInWishlist }) {
   const paddingLeft = aisleNumber % 2 === 1; // This is so every other aisle is back-to-back like in a store
 
   return (
@@ -411,14 +413,14 @@ function Aisle({ key, categories, aisleNumber, addToWishlist }) {
       }}
     >
       {categories.map((category, subIndex) => (
-        <Shelf key={category} category={category} addToWishlist={addToWishlist} />
+        <Shelf key={category} category={category} addToWishlist={addToWishlist} isProductInWishlist={isProductInWishlist} />
       ))}
     </div>
   );
 }
 
 
-function Shelf({ key, category, addToWishlist, removeFromWishlist }) {
+function Shelf({ key, category, addToWishlist, isProductInWishlist }) {
 
   const products = PRODUCTS.filter(p => p.category == category);
 
@@ -430,7 +432,7 @@ function Shelf({ key, category, addToWishlist, removeFromWishlist }) {
         width: '10vw', maxHeight: "100%", maxWidth: "100%", border: 'none', borderRadius: '5px', background: 'rgba(210, 210, 255)',
         marginBottom: "0.5vw"
       }}>
-        <ShelvedProducts products={products} addToWishlist={addToWishlist} />
+        <ShelvedProducts products={products} addToWishlist={addToWishlist} isProductInWishlist={isProductInWishlist} />
       </button>
       <text style={{ textAlign: 'center', cursor: 'default', border: '1px black', marginBottom: '0.25vh', borderRadius: '5px', background: 'rgba(210, 210, 255)' }}
       >{category} </text>
@@ -439,7 +441,7 @@ function Shelf({ key, category, addToWishlist, removeFromWishlist }) {
 }
 
 
-function ShelvedProducts({ products, addToWishlist }) {
+function ShelvedProducts({ products, addToWishlist, isProductInWishlist }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -458,11 +460,11 @@ function ShelvedProducts({ products, addToWishlist }) {
           key={product.name}
           src={product.image}
           alt={product.name}
-          style={{ maxWidth: "100%", height: '100px', cursor: 'pointer', zIndex: '4000' }}
+          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000' }}
           onClick={() => openModal(product)}
         />
       ))}
-      <ProductModal product={selectedProduct} isOpen={modalOpen} closeModal={closeModal} addToWishlist={addToWishlist} />
+      <ProductModal product={selectedProduct} isOpen={modalOpen} closeModal={closeModal} addToWishlist={addToWishlist} isProductInWishlist={isProductInWishlist} />
     </>
   );
 }
@@ -470,21 +472,10 @@ function ShelvedProducts({ products, addToWishlist }) {
 const foodCategories = ['Water', 'Petfood', 'Babyfood', 'Vegetables', 'Fish', 'Meat', 'Fruit', 'Soda', 'Pizza', 'Ice Cream', 'Bakery', 'Jam', 'Coffee', 'Cereal', 'Juice',
   'Canned Food', 'Crackers', 'Snacks', 'Soup', 'International', 'Rice', 'Beans', 'Nuts', 'Spices', 'Baking', 'Pasta', 'Oils', 'Dressing & Condiments'];
 
-function ProductModal({ product, isOpen, closeModal, addToWishlist, removeFromWishlist, isOnWishlist }) {
-  const [isButtonPressed, setIsButtonPressed] = useState(isOnWishlist);
-  const [buttonText, setButtonText] = useState(isOnWishlist ? 'Item added to wishlist' : 'Add to Wishlist');
+function ProductModal({ product, isOpen, closeModal, addToWishlist, isProductInWishlist }) {
 
   const handleAddToWishlist = () => {
-    if (isOnWishlist) {
-      removeFromWishlist(product);
-    } else {
-      addToWishlist(product);
-    }
-
-    // Toggle isButtonPressed when the button is clicked
-    setIsButtonPressed(!isButtonPressed);
-    // Update buttonText based on the updated state
-    setButtonText(isButtonPressed ? 'Add to Wishlist' : 'Item added to wishlist');
+    addToWishlist(product);
   };
 
 
@@ -499,13 +490,6 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist, removeFromWi
     return stars;
   };
 
-  const buttonStyle = {
-    backgroundColor: isButtonPressed ? 'lightgreen' : 'orange',
-    border: 'none',
-    padding: '10px',
-    cursor: 'pointer',
-  }
-
   return (
     <>
       <div>
@@ -519,7 +503,11 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist, removeFromWi
                 <div style={{ display: 'flex', width: '100%' }}>{renderStars()}</div>
                 <div style={{ display: 'flex', width: '100%' }}><h2>Price: ${product.price}</h2></div>
                 <div style={{ display: 'flex', width: '100%', paddingBottom: '1vh' }}> {foodCategories.includes(product.category) && <NutritionFacts product={product} />}</div>
-                <button className='modal-button-clicked' onClick={handleAddToWishlist} style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }}>Add to Wishlist</button>
+                <button className='modal-button-clicked'
+                  onClick={handleAddToWishlist}
+                  style={{ backgroundColor: isProductInWishlist(product) ? 'grey' : 'orange', border: 'none', padding: '10px', cursor: isProductInWishlist(product) ? 'default' : 'pointer', pointerEvents: isProductInWishlist(product) ? 'none' : 'auto' }}
+                  disabled={isProductInWishlist(product)} // Disable button after click
+                >{isProductInWishlist(product) ? 'Added to Wishlist' : 'Add to Wishlist'}</button>
               </div>
             </div>
           </div>
@@ -619,7 +607,7 @@ function WishList({ wishlist, removeFromWishlist }) {
           background: 'transparent',
           border: 'none'
         }}>
-          <svg className='wishlist-icon wishlist-btn-clicked wishlist-btn' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M9.06,25C7.68,17.3,12.78,10.63,20.73,10c7-.55,10.47,7.93,11.17,9.55a.13.13,0,0,0,.25,0c3.25-8.91,9.17-9.29,11.25-9.5C49,9.45,56.51,13.78,55,23.87c-2.16,14-23.12,29.81-23.12,29.81S11.79,40.05,9.06,25Z" />
+          <svg className='wishlist-icon wishlist-btn-hover wishlist-btn-clicked wishlist-btn' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M9.06,25C7.68,17.3,12.78,10.63,20.73,10c7-.55,10.47,7.93,11.17,9.55a.13.13,0,0,0,.25,0c3.25-8.91,9.17-9.29,11.25-9.5C49,9.45,56.51,13.78,55,23.87c-2.16,14-23.12,29.81-23.12,29.81S11.79,40.05,9.06,25Z" />
           </svg>
         </button>
 
@@ -757,11 +745,13 @@ export default function App() {
     setWishlist(wishlist.filter(wishlistProduct => wishlistProduct.name !== product.name));
   };
 
-
-  const removeFromWishlist = (product) => {
-    setWishlist(wishlist.filter(wishlistProduct => wishlistProduct.name !== product.name));
+  const isProductInWishlist = (product) => {
+    // Check if product and wishlist are not null
+    if (product && wishlist) {
+      return wishlist.some(wishlistProduct => wishlistProduct.name === product.name);
+    }
+    return false;
   };
-
 
   const [scrollInterval, setScrollInterval] = useState(null);
   const [leftArrowColor, setLeftArrowColor] = useState('#000000');
@@ -830,7 +820,7 @@ export default function App() {
       <div>
         <WishList wishlist={wishlist} removeFromWishlist={removeFromWishlist} />
         <FilterableProductTable products={PRODUCTS} />
-        <Store aisleCategories={CATEGORIES} addToWishlist={addToWishlist} />
+        <Store aisleCategories={CATEGORIES} addToWishlist={addToWishlist} isProductInWishlist={isProductInWishlist} />
       </div>
     </>
   );

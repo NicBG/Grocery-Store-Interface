@@ -131,13 +131,19 @@ stroke-width: 3px
   }
 
 .wishlist-btn-clicked:active{
-transform: scale(0.95);
 fill: red;
 }
 
 .wishlist-btn{
   fill: rgba(210,210,255);
-  }
+}
+
+
+.wishlist-btn-hover:hover {
+  transition: 0.3s;
+  transform: scale(1.05);
+}
+
 
 .modal-button-clicked:active{
   transform: scale(0.95);
