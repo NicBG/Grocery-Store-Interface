@@ -119,8 +119,6 @@ const PRODUCTS = [
 
 ];
 
-
-
 function FilterableProductTable({ products }) {
   const [filterText, setFilterText] = useState('');
   const [filterCategory, setFilterCategory] = useState(null);
@@ -259,7 +257,7 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
     height: '98vh',
     width: '25vh',
     direction: 'ltr',
-    marginLeft: '-920px',
+    marginLeft: '-48vw',
     marginTop: '-90px',
     
   };

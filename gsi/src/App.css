@@ -44,6 +44,7 @@
 }
 
 body {
+  background: #EDEDED;
   margin-left: -10vw;
   transition: margin-left 0.5s ease-in-out; /* Add a transition for a smoother effect */
   
