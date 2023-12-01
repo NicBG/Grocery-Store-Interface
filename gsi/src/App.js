@@ -258,7 +258,7 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
     width: '25vh',
     direction: 'ltr',
     marginLeft: '-48vw',
-    marginTop: '-90px',
+    marginTop: '-9vh',
     
   };
 
@@ -335,8 +335,8 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
             border: 'none', // Removes border
             backgroundColor: 'transparent', // Makes background transparent
             cursor: 'pointer', // Changes cursor to pointer on hover
-            marginLeft: '-980px',
-            marginTop: '-200px'
+            marginLeft: '-51vw',
+            marginTop: '-20vh'
           
           }}
         >
