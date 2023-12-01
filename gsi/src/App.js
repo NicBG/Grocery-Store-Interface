@@ -125,20 +125,22 @@ function FilterableProductTable({ products }) {
   const [filterText, setFilterText] = useState('');
   const [filterCategory, setFilterCategory] = useState(null);
   const [isSearchBarClicked, setIsSearchBarClicked] = useState(false);
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const handleFilterTextChange = (newFilterText) => {
     setFilterText(newFilterText);
   };
 
   const handleSearchBarClick = () => {
-    if(!isSearchBarClicked && !isButtonClicked){
+    if(!isSearchBarClicked){
       setIsSearchBarClicked(!isSearchBarClicked);
     }
   };
 
   const handleButtonClick = () => {
-    setIsButtonClicked(!isButtonClicked);
+    if(isSearchBarClicked){
+      setIsSearchBarClicked(!isSearchBarClicked);
+      document.body.classList.remove('body-margin-35');
+    }
   }
 
   // <div style={{position: 'absolute', height: '750px', width: "500px", overflow: 'auto', direction: 'ltr'}}></div>
@@ -159,7 +161,6 @@ function FilterableProductTable({ products }) {
           onFilterTextChange={setFilterText}
           isSearchBarClicked={isSearchBarClicked}
           onSearchBarClick={handleSearchBarClick}
-          isButtonClicked={isButtonClicked}
           onButtonClick={handleButtonClick} />
       </div>
       
@@ -278,7 +279,7 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
   );
 }
 
-function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearchBarClick, isButtonClicked, onButtonClick }) {
+function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearchBarClick, onButtonClick }) {
   return (
     <form>
       <div
@@ -346,7 +347,7 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
           </svg>
         </button>
       </div>}
-      {isSearchBarClicked && !isButtonClicked && 
+      {isSearchBarClicked && 
       <div>
         <ProductTable products={PRODUCTS} filterText={filterText} isSearchBarClicked={isSearchBarClicked} />
       </div> 
