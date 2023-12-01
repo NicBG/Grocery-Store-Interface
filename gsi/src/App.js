@@ -168,6 +168,7 @@ function FilterableProductTable({ products }) {
 function ProductRow({ product }) {
 
   const [scrollToComponent, setScrollComponent] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
     if (scrollToComponent) {
@@ -199,12 +200,27 @@ function ProductRow({ product }) {
 
   function handleClick() {
     setScrollComponent(true);
+    setIsSelected(true); // Toggle the selected state
+
+    // Set a timeout to unselect after a short delay (e.g., 500 milliseconds)
+    setTimeout(() => {
+      setIsSelected(false);
+    }, 100);
+
   }
 
   return (
     //-------------------------------------------------------------For side table color scheme, change the background here
 
-    <div style={{ background: 'rgba(210,210,255)', border: "1px solid black", margin: "5px", borderRadius: '8px', cursor: 'pointer' }} onClick={() => handleClick()}>
+    <div
+      style={{
+        background: isSelected ? 'lightblue' : 'rgba(210,210,255)',
+        border: "1px solid black",
+        margin: "5px",
+        borderRadius: '8px',
+        cursor: 'pointer'
+      }}
+      onClick={() => handleClick()}>
       <tr>
         <td style={{ fontWeight: 'bold', fontSize: '18px' }}>{name}</td>
       </tr>
@@ -442,7 +458,7 @@ function ShelvedProducts({ products, addToWishlist }) {
           key={product.name}
           src={product.image}
           alt={product.name}
-          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000' }} //change values here to modify the look of items inside each shelf
+          style={{ maxWidth: "100%", height: '100px', cursor: 'pointer', zIndex: '4000' }}
           onClick={() => openModal(product)}
         />
       ))}
@@ -454,11 +470,22 @@ function ShelvedProducts({ products, addToWishlist }) {
 const foodCategories = ['Water', 'Petfood', 'Babyfood', 'Vegetables', 'Fish', 'Meat', 'Fruit', 'Soda', 'Pizza', 'Ice Cream', 'Bakery', 'Jam', 'Coffee', 'Cereal', 'Juice',
   'Canned Food', 'Crackers', 'Snacks', 'Soup', 'International', 'Rice', 'Beans', 'Nuts', 'Spices', 'Baking', 'Pasta', 'Oils', 'Dressing & Condiments'];
 
-function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
-  const handleAddToWishlist = () => {
-    addToWishlist(product);
-  };
+function ProductModal({ product, isOpen, closeModal, addToWishlist, removeFromWishlist, isOnWishlist }) {
+  const [isButtonPressed, setIsButtonPressed] = useState(isOnWishlist);
+  const [buttonText, setButtonText] = useState(isOnWishlist ? 'Item added to wishlist' : 'Add to Wishlist');
 
+  const handleAddToWishlist = () => {
+    if (isOnWishlist) {
+      removeFromWishlist(product);
+    } else {
+      addToWishlist(product);
+    }
+
+    // Toggle isButtonPressed when the button is clicked
+    setIsButtonPressed(!isButtonPressed);
+    // Update buttonText based on the updated state
+    setButtonText(isButtonPressed ? 'Add to Wishlist' : 'Item added to wishlist');
+  };
 
 
   // Function to render star ratings
@@ -472,6 +499,12 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
     return stars;
   };
 
+  const buttonStyle = {
+    backgroundColor: isButtonPressed ? 'lightgreen' : 'orange',
+    border: 'none',
+    padding: '10px',
+    cursor: 'pointer',
+  }
 
   return (
     <>
@@ -547,8 +580,10 @@ const wishListContentStyle = {
 };
 
 const imageStyle = {
-  width: '450px', // Fixed width for the image
-  height: '300px', // Maintain aspect ratio
+  maxWidth: '450px',
+  maxHeight: '400px',
+  width: 'auto', // Fixed width for the image
+  height: 'auto', // Maintain aspect ratio
   marginRight: '10px' // Space between image and text
 };
 
@@ -715,6 +750,11 @@ export default function App() {
       setWishlist([...wishlist, product]);
     }
     console.log(wishlist);
+  };
+
+
+  const removeFromWishlist = (product) => {
+    setWishlist(wishlist.filter(wishlistProduct => wishlistProduct.name !== product.name));
   };
 
 
