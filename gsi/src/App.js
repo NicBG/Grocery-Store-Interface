@@ -181,12 +181,12 @@ function ProductRow({ product }) {
         if (productItem) {
           productItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
         }
-        else{
+        else {
           console.log("Uh oh couldnt find " + product.name);
         }
       }
-      else{
-        console.log("Uh oh couldnt find " + product.category );
+      else {
+        console.log("Uh oh couldnt find " + product.category);
       }
     }
 
@@ -667,13 +667,13 @@ function WishListItem({ product, onTakeMeThere }) {
             onTakeMeThere();
           }, 1);
         }}>Take me there</button>
-        <NutritionFacts product={product}/>
+        <NutritionFacts product={product} />
       </div>
     </div>
   );
 }
 
-function NutritionFacts({product}) {
+function NutritionFacts({ product }) {
 
   const facts = [
     ["Total Fat", '0g'],
@@ -688,11 +688,11 @@ function NutritionFacts({product}) {
   facts.forEach(fact => {
     factsRow.push(
       <>
-        <hr style={{color: "black", margin: 0}}/>
+        <hr style={{ color: "black", margin: 0 }} />
         <b>{fact[0]}</b>
         <span> {fact[1]}</span>
 
-        <div style={{textAlign: "right"}}>
+        <div style={{ textAlign: "right" }}>
           <b>0%</b>
         </div>
       </>
@@ -701,26 +701,26 @@ function NutritionFacts({product}) {
 
 
   return (
-    <div style={{border: '1px solid black', marginTop: '3vh'}}>
-      <h1 style={{margin: 0}}>Nutrition Facts</h1>
-      <hr style={{color: "black"}}></hr>
+    <div style={{ border: '1px solid black', marginTop: '3vh' }}>
+      <h1 style={{ margin: 0 }}>Nutrition Facts</h1>
+      <hr style={{ color: "black" }}></hr>
       <span>16 serving serving per container</span>
-      <br/>
+      <br />
 
       <b>Serving Size &emsp;&emsp;&emsp;&emsp; 1 Tbsp. (21g)</b>
 
-      <hr style={{color: "black", border: '4px solid black', marginLeft: "0.5vw", marginRight: "0.5vw"}}></hr>
+      <hr style={{ color: "black", border: '4px solid black', marginLeft: "0.5vw", marginRight: "0.5vw" }}></hr>
 
       <span>Amount per serving</span>
 
-      <h1 style={{margin: 0}}>Calories 50</h1>
+      <h1 style={{ margin: 0 }}>Calories 50</h1>
 
-      <hr style={{color: "black", border: '2px solid black', margin: "0vh 0.5vw 0vh"}}></hr>
+      <hr style={{ color: "black", border: '2px solid black', margin: "0vh 0.5vw 0vh" }}></hr>
 
-      <div style={{textAlign: "right"}}>
+      <div style={{ textAlign: "right" }}>
         <b>% Daily Value*</b>
       </div>
-      <br/>
+      <br />
 
       {factsRow}
 
