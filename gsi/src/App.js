@@ -181,6 +181,12 @@ function ProductRow({ product }) {
         if (productItem) {
           productItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
         }
+        else{
+          console.log("Uh oh couldnt find " + product.name);
+        }
+      }
+      else{
+        console.log("Uh oh couldnt find " + product.category );
       }
     }
 
@@ -445,6 +451,7 @@ function ShelvedProducts({ products, addToWishlist }) {
     <>
       {products.map(product => (
         <img className='modal-button-clicked'
+          id={product.name + '-shelved'} /* NEVER EVER EVER CHANGE THIS - Niko */
           key={product.name}
           src={product.image}
           alt={product.name}
