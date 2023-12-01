@@ -149,6 +149,16 @@ fill: red;
   transform: scale(1.2);
 }
 
+.items-button-clicked:active{
+  transform: scale(0.5);
+}
+
+.items:hover {
+  transition: 1s;
+  transform: scale(1.03);
+}
+
+
 .scroll-arrow-left {
   left: 25px;
   top: 50vh

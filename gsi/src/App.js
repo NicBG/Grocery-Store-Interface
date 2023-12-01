@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
-import wishlisticon from './wishlist-svgrepo-com.svg';
 
 const CATEGORIES = [
   ["Water", "Petfood"],
@@ -8,7 +7,7 @@ const CATEGORIES = [
   ["Diapers", "Babyfood"],
   ["Cleaning Supplies"],
   ["Toilet Paper", "Paper Plates"],
-  ["Fish", "Vegtables"],
+  ["Fish", "Vegetables"],
   ["Meat", "Fruit"],
   ["Pizza", "Soda"],
   ["Ice Cream", "Bakery"],
@@ -94,7 +93,7 @@ const PRODUCTS = [
   { name: "Trash Tissue", price: 15.99, category: "Toilet Paper", image: "https://images.dailyhive.com/20200315161754/shutterstock_1122871010.jpeg" },
   { name: "40 Paper Plates", price: 6.99, category: "Paper Plates", image: "https://apim.canadiantire.ca/v1/product/api/v1/product/image/0429200p?baseStoreId=CTR&lang=en_CA&subscription-key=c01ef3612328420c9f5cd9277e815a0e&imwidth=640" },
   { name: "Frozen Fish Sticks", price: 4.99, category: "Fish", image: "https://i5.walmartimages.com/asr/8664e28f-880f-4182-8f2c-76f2bccc2cfe.738cfc499d1b1fd04b38607ff88a02ec.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
-  { name: "Potato", price: 0.99, category: "Vegtables", image: "https://www.dole.com/-/media/project/dole/produce-images/vegetables/potatoes_cut_web.png?rev=b1a051bd8a484f0fa16cb33d70f738d6&hash=2FD99C8B77805DF39C6AA4C8F0C2AA9C" },
+  { name: "Potato", price: 0.99, category: "Vegetables", image: "https://www.dole.com/-/media/project/dole/produce-images/vegetables/potatoes_cut_web.png?rev=b1a051bd8a484f0fa16cb33d70f738d6&hash=2FD99C8B77805DF39C6AA4C8F0C2AA9C" },
   { name: "Whole Chicken", price: 8.99, category: "Meat", image: "https://static01.nyt.com/images/2020/05/01/science/01TB-CHICKEN/01TB-CHICKEN-videoSixteenByNine3000.jpg?year=2020&h=1688&w=3000&s=08d78bcca3d81952683068193e144be7e941d5e4711d1ab521355c31e30381b5&k=ZQJBKqZ0VN&tw=1" },
   { name: "Banana", price: 0.99, category: "Fruit", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/640px-Banana-Single.jpg" },
   { name: "Pizza Starter Kit", price: 5.99, category: "Pizza", image: "https://i5.walmartimages.ca/images/Enlarge/665/658/6000204665658.jpg" },
@@ -372,35 +371,6 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
   );
 }
 
-
-/*
-const CATEGORIES = [
-  ["Water"],
-  ["Petfood"],
-  ["Tissues", "Shampoo"],
-  ["Diapers", "Babyfood"],
-  ["Detergent", "Cleaning Supplies", "Soap"],
-  ["Toilet Paper", "Paper Plates"],
-  ["Fish", "Vegtables", "Potato", "Breakfast"],
-  ["Meals", "International"],
-  ["Pizza", "TV Dinners", "Perogies"],
-  ["Ice Cream", "Bakery"],
-  ["Cereal", "Jam"],
-  ["Juice", "Coffie"],
-  ["Snacks", "Cookies"],
-  ["Soup", "Crackers"],
-  ["Canned Food"],
-  ["Indian", "Rice"],
-  ["Asian", "Jamacian", "Beans"],
-  ["Chips", "Nuts"],
-  ["Soda"],
-  ["Flour", "Baking", "Spices", "Sugar"],
-  ["Tomato", "Pasta", "Mexican", "Plastic"],
-  ["Oil", "Dressing", "Condiments"]
-];
-*/
-
-
 function Store({ aisleCategories, addToWishlist }) {
   //style={{ display: 'flex', flexDirection: 'row', width: '125vw', height: "80vh", padding: '9vh 15vw' }}
   return (
@@ -432,7 +402,7 @@ function Aisle({ key, categories, aisleNumber, addToWishlist }) {
 }
 
 
-function Shelf({ key, category, addToWishlist }) {
+function Shelf({ key, category, addToWishlist, removeFromWishlist }) {
 
   const products = PRODUCTS.filter(p => p.category == category);
 
@@ -446,7 +416,7 @@ function Shelf({ key, category, addToWishlist }) {
       }}>
         <ShelvedProducts products={products} addToWishlist={addToWishlist} />
       </button>
-      <text style={{ textAlign: 'center', border: '1px black', marginBottom: '0.25vh', borderRadius: '5px', background: 'rgba(210, 210, 255)' }}
+      <text style={{ textAlign: 'center', cursor: 'default', border: '1px black', marginBottom: '0.25vh', borderRadius: '5px', background: 'rgba(210, 210, 255)' }}
       >{category} </text>
     </>
   );
@@ -467,7 +437,7 @@ function ShelvedProducts({ products, addToWishlist }) {
   return (
     <>
       {products.map(product => (
-        <img className='modal-button-clicked'
+        <img className='items'
           id={product.name + '-shelved'} /* NEVER EVER EVER CHANGE THIS - Niko */
           key={product.name}
           src={product.image}
@@ -481,6 +451,8 @@ function ShelvedProducts({ products, addToWishlist }) {
   );
 }
 
+const foodCategories = ['Water', 'Petfood', 'Babyfood', 'Vegetables', 'Fish', 'Meat', 'Fruit', 'Soda', 'Pizza', 'Ice Cream', 'Bakery', 'Jam', 'Coffee', 'Cereal', 'Juice',
+  'Canned Food', 'Crackers', 'Snacks', 'Soup', 'International', 'Rice', 'Beans', 'Nuts', 'Spices', 'Baking', 'Pasta', 'Oils', 'Dressing & Condiments'];
 
 function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
   const handleAddToWishlist = () => {
@@ -506,14 +478,14 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
       <div>
         {isOpen && product && (
           <div style={modalOverlayStyle} onClick={closeModal}>
-            <div style={{ ...modalContentStyle, display: 'flex' }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ ...modalContentStyle, display: 'flex', alignItems: 'center' }} onClick={(e) => e.stopPropagation()}>
               <span className='modal-button-clicked' style={closeButtonStyle} onClick={closeModal}>&times;</span>
               <img src={product.image} alt={product.name} style={imageStyle} />
-              <div style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <h1>{product.name}</h1>
-                <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>{renderStars()}</div>
-                <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}><h2>Price: ${product.price}</h2></div>
-                <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}><h3>Description: {product.description}</h3></div>
+              <div style={{ padding: '10px', display: 'flex', flexDirection: 'column' }}>
+                <h1 style={{ textAlign: 'left' }}>{product.name}</h1>
+                <div style={{ display: 'flex', width: '100%' }}>{renderStars()}</div>
+                <div style={{ display: 'flex', width: '100%' }}><h2>Price: ${product.price}</h2></div>
+                <div style={{ display: 'flex', width: '100%', paddingBottom: '1vh' }}> {foodCategories.includes(product.category) && <NutritionFacts product={product} />}</div>
                 <button className='modal-button-clicked' onClick={handleAddToWishlist} style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }}>Add to Wishlist</button>
               </div>
             </div>
@@ -592,7 +564,7 @@ const cardStyle = {
 };
 
 /////////
-function WishList({ wishlist }) {
+function WishList({ wishlist, removeFromWishlist }) {
   const [showWishlist, setShowWishlist] = useState(false);
 
   const toggleWishlist = () => {
@@ -627,7 +599,7 @@ function WishList({ wishlist }) {
                   </div>
                 ) : (
                   wishlist.map((product, index) =>
-                    <WishListItem product={product} onTakeMeThere={toggleWishlist} />
+                    <WishListItem product={product} onTakeMeThere={toggleWishlist} onRemoveFromWishlist={() => removeFromWishlist(product)} />
                   )
                 )}
               </div>
@@ -639,7 +611,7 @@ function WishList({ wishlist }) {
   );
 }
 
-function WishListItem({ product, onTakeMeThere }) {
+function WishListItem({ product, onTakeMeThere, onRemoveFromWishlist }) {
 
   const [scrollToComponent, setScrollComponent] = useState(false);
 
@@ -665,19 +637,21 @@ function WishListItem({ product, onTakeMeThere }) {
       <img src={product.image} alt={product.name} style={imageStyle} />
       <div>
         <h1 style={{ margin: 0 }}>{product.name}</h1>
-        <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}>Remove From Wishlist</button>
-        <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }} onClick={() => {
-          setScrollComponent(true); setTimeout(() => {
-            onTakeMeThere();
-          }, 1);
-        }}>Take me there</button>
-        <NutritionFacts product={product} />
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', marginRight: '10px', marginTop: '20px', cursor: 'pointer', flex: 1 }} onClick={onRemoveFromWishlist}>Remove From Wishlist</button>
+          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer', marginTop: '20px' }} onClick={() => {
+            setScrollComponent(true); setTimeout(() => {
+              onTakeMeThere();
+            }, 1);
+          }}>Take me there</button>
+        </div>
+        <div style={{ display: 'flex', width: '100%', paddingBottom: '1vh', paddingTop: '1vh' }}> {foodCategories.includes(product.category) && <NutritionFacts />}</div>
       </div>
     </div>
   );
 }
 
-function NutritionFacts({ product }) {
+function NutritionFacts() {
 
   const facts = [
     ["Total Fat", '0g'],
@@ -695,7 +669,6 @@ function NutritionFacts({ product }) {
         <hr style={{ color: "black", margin: 0 }} />
         <b>{fact[0]}</b>
         <span> {fact[1]}</span>
-
         <div style={{ textAlign: "right" }}>
           <b>0%</b>
         </div>
@@ -705,10 +678,10 @@ function NutritionFacts({ product }) {
 
 
   return (
-    <div style={{ border: '1px solid black', marginTop: '3vh' }}>
+    <div style={{ border: '1px solid black', marginTop: '0vh', textAlign: "left", padding: '0.5vh' }}>
       <h1 style={{ margin: 0 }}>Nutrition Facts</h1>
       <hr style={{ color: "black" }}></hr>
-      <span>16 serving serving per container</span>
+      <span>16 servings per container</span>
       <br />
 
       <b>Serving Size &emsp;&emsp;&emsp;&emsp; 1 Tbsp. (21g)</b>
@@ -717,7 +690,7 @@ function NutritionFacts({ product }) {
 
       <span>Amount per serving</span>
 
-      <h1 style={{ margin: 0 }}>Calories 50</h1>
+      <h1 style={{ margin: 0 }}>Calories &emsp;&emsp;&emsp; 50</h1>
 
       <hr style={{ color: "black", border: '2px solid black', margin: "0vh 0.5vw 0vh" }}></hr>
 
@@ -733,10 +706,7 @@ function NutritionFacts({ product }) {
 }
 
 
-
-/*
 export default function App() {
-
   const [wishlist, setWishlist] = useState([]);
 
   const addToWishlist = (product) => {
@@ -748,27 +718,8 @@ export default function App() {
   };
 
 
-  return (
-    <>
-      <div>
-        <WishList wishlist={wishlist} />
-        <FilterableProductTable products={PRODUCTS} />
-        <Store aisleCategories={CATEGORIES} addToWishlist={addToWishlist} />
-      </div>
-    </>
-  );
-}
-
-*/
-export default function App() {
-  const [wishlist, setWishlist] = useState([]);
-
-  const addToWishlist = (product) => {
-    // Add product to wishlist if not already present
-    if (!wishlist.some(wishlistProduct => wishlistProduct.name === product.name)) {
-      setWishlist([...wishlist, product]);
-    }
-    console.log(wishlist);
+  const removeFromWishlist = (product) => {
+    setWishlist(wishlist.filter(wishlistProduct => wishlistProduct.name !== product.name));
   };
 
 
@@ -837,47 +788,10 @@ export default function App() {
         </svg>
       </div>
       <div>
-        <WishList wishlist={wishlist} />
+        <WishList wishlist={wishlist} removeFromWishlist={removeFromWishlist} />
         <FilterableProductTable products={PRODUCTS} />
         <Store aisleCategories={CATEGORIES} addToWishlist={addToWishlist} />
       </div>
     </>
   );
 }
-
-/*
-body {
-        margin: 0;
-        padding: 0;
-        background-color: #FFFFFF;
-      }
-
-      
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 18px; 
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background-color: transparent;
-      }
-
-      
-      body {
-        scrollbar-width: thin;
-      }
-
-      body::-webkit-scrollbar-thumb {
-        background-color: #888;
-      }
-
-      body::-webkit-scrollbar-track {
-        background-color: #FFFFFF; 
-      }
-
-      body::-webkit-scrollbar-track-piece {
-        background-color: transparent;
-      }
-
-
-*/
