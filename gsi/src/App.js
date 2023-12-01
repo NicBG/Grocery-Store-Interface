@@ -3,9 +3,9 @@ import './App.css';
 
 const CATEGORIES = [
   ["Water", "Petfood"],
+  ["Detergent", "Cleaning Supplies"],
   ["Tissues", "Shampoo"],
   ["Diapers", "Babyfood"],
-  ["Cleaning Supplies"],
   ["Toilet Paper", "Paper Plates"],
   ["Fish", "Vegetables"],
   ["Meat", "Fruit"],
@@ -65,15 +65,15 @@ const PRODUCTS = [
   //Cleaning Supplies
   { name: "All-Purpose Cleaner", price: 3.49, category: "Cleaning Supplies", ratings: "5", image: "https://assets.shop.loblaws.ca/products/21207721/b1/en/front/21207721_front_a01_@2.png" },
   { name: "Bleach", price: 6.99, category: "Cleaning Supplies", ratings: "4", image: "https://images.homedepot.ca/productimages/p_1000661431.jpg?product-images=l" },
-  { name: "Clorox Clean Up Cleaner 946ml", price: 4.99, category: "Cleaning Supplies", ratings: "5", image: "https://media-www.canadiantire.ca/product/living/cleaning/household-cleaning-solutions/1531420/clorox-clean-up-cleaner-and-bleach-946ml-70e4c03a-0889-465a-8374-6c89ef332628.png?imdensity=1&imwidth=1244&impolicy=gZoom"},
-  { name: "Palmolive Liquid Dish Soap 828 mL", price: 2.97, category: "Cleaning Supplies", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/124/805/6000206124805.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"},
-  { name: "Tide Simply Clean Laundry Detergent 3.4L", price: 11.97, category: "Cleaning Supplies", ratings: "4", image:"https://i5.walmartimages.ca/images/Enlarge/188/645/6000204188645.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"},
-  { name: "Purex 4 in 1 Laundry Detergent 4.43L", price: 15.47, category: "Cleaning Supplies", ratings: "3", image: "https://i5.walmartimages.ca/images/Enlarge/278/154/6000207278154.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"},
-  { name: "Pine-Sol Multi-Surface Cleaner 1.41L", price: 5.47, category: "Cleaning Supplies", ratings:"5", image: "https://i5.walmartimages.ca/images/Enlarge/529/861/6000203529861.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"},
-  { name: "Swiffer Sweeper 2-in-1 Floor Cleaner, 1 Mop + 10 Refills", price: 18.97, category: "Cleaning Supplies", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/170/046/6000199170046.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"},
-  { name: "Swiffer WetJet Spray Liquid Floor Cleaner 1.25L", price: 8.97, category: "Cleaning Supplies", ratings: "5", image: "https://i5.walmartimages.ca/images/Enlarge/959/793/6000196959793.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"},
+  { name: "Clorox Clean Up Cleaner 946ml", price: 4.99, category: "Cleaning Supplies", ratings: "5", image: "https://i5.walmartimages.ca/images/Enlarge/124/805/6000206124805.jpg" },
+  { name: "Palmolive Liquid Dish Soap 828 mL", price: 2.97, category: "Cleaning Supplies", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/124/805/6000206124805.jpg"},
+  { name: "Tide Simply Clean Laundry Detergent 3.4L", price: 11.97, category: "Detergent", ratings: "4", image:"https://i5.walmartimages.ca/images/Enlarge/188/645/6000204188645.jpg"},
+  { name: "Purex 4 in 1 Laundry Detergent 4.43L", price: 15.47, category: "Detergent", ratings: "3", image: "https://i5.walmartimages.ca/images/Enlarge/278/154/6000207278154.jpg"},
+  { name: "Pine-Sol Multi-Surface Cleaner 1.41L", price: 5.47, category: "Cleaning Supplies", ratings:"5", image: "https://i5.walmartimages.ca/images/Enlarge/529/861/6000203529861.jpg"},
+  { name: "Swiffer Sweeper 2-in-1 Floor Cleaner, 1 Mop + 10 Refills", price: 18.97, category: "Cleaning Supplies", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/170/046/6000199170046.jpg"},
+  { name: "Swiffer WetJet Spray Liquid Floor Cleaner 1.25L", price: 8.97, category: "Cleaning Supplies", ratings: "5", image: "https://i5.walmartimages.ca/images/Enlarge/959/793/6000196959793.jpg"},
 
-  
+  //"https://media-www.canadiantire.ca/product/living/cleaning/household-cleaning-solutions/1531420/clorox-clean-up-cleaner-and-bleach-946ml-70e4c03a-0889-465a-8374-6c89ef332628.png?imdensity=1&imwidth=1244&impolicy=gZoom"
   
   
   { name: "Toilet Paper Roll", price: 15.99, category: "Toilet Paper", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/905/656/6000204905656.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
@@ -190,17 +190,9 @@ function ProductRow({ product }) {
       const productItem = document.getElementById(`${product.name}-shelved`);
 
       if (shelfItem) {
-        shelfItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
-
-        if (productItem) {
-          productItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-        }
-        else {
-          console.log("Uh oh couldnt find " + product.name);
-        }
-      }
-      else {
-        console.log("Uh oh couldnt find " + product.category);
+        productItem.scrollIntoView({ behavior: 'smooth', block:'center', inline: 'center' });
+        shelfItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline:'center'});
+        /*productItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline:'center'})*/
       }
     }
 
@@ -237,7 +229,9 @@ function ProductRow({ product }) {
         cursor: 'pointer',
         transition: '1s'
       }}
-      onClick={() => handleClick()}>
+      onClick={() => setTimeout(() => {
+        setScrollComponent(true);
+      }, 1)}>
       <tr>
         <td style={{ fontWeight: 'bold', fontSize: '18px' }}>{name}</td>
       </tr>
@@ -518,12 +512,13 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist, isProductInW
                 <h1 style={{ textAlign: 'left' }}>{product.name}</h1>
                 <div style={{ display: 'flex', width: '100%' }}>{renderStars()}</div>
                 <div style={{ display: 'flex', width: '100%' }}><h2>Price: ${product.price}</h2></div>
-                <div style={{ display: 'flex', width: '100%', paddingBottom: '1vh' }}> {foodCategories.includes(product.category) && <NutritionFacts product={product} />}</div>
+                <div style={{ display: 'flex', width: '100%', flexDirection:'column' }}> {foodCategories.includes(product.category) && <NutritionFacts product={product} />}
                 <button className='modal-button-clicked'
                   onClick={handleAddToWishlist}
-                  style={{ backgroundColor: isProductInWishlist(product) ? 'grey' : 'orange', border: 'none', padding: '10px', cursor: isProductInWishlist(product) ? 'default' : 'pointer', pointerEvents: isProductInWishlist(product) ? 'none' : 'auto' }}
+                  style={{ backgroundColor: isProductInWishlist(product) ? 'grey' : 'orange', border: 'none', padding: '10px', marginTop:'1vh', cursor: isProductInWishlist(product) ? 'default' : 'pointer', pointerEvents: isProductInWishlist(product) ? 'none' : 'auto' }}
                   disabled={isProductInWishlist(product)} // Disable button after click
                 >{isProductInWishlist(product) ? 'Added to Wishlist' : 'Add to Wishlist'}</button>
+                </div>
               </div>
             </div>
           </div>
@@ -677,8 +672,8 @@ function WishListItem({ product, onTakeMeThere, onRemoveFromWishlist }) {
       <div>
         <h1 style={{ margin: 0 }}>{product.name}</h1>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', marginRight: '10px', marginTop: '20px', cursor: 'pointer', flex: 1 }} onClick={onRemoveFromWishlist}>Remove From Wishlist</button>
-          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer', marginTop: '20px' }} onClick={() => {
+          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px',marginRight: '10px', marginTop: '20px', cursor: 'pointer', flex: 1 }} onClick={onRemoveFromWishlist}>Remove From Wishlist</button>
+          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer', marginTop: '20px', flex:1 }} onClick={() => {
             setScrollComponent(true); setTimeout(() => {
               onTakeMeThere();
             }, 1);
