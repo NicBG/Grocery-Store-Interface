@@ -2,31 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import wishlisticon from './wishlist-svgrepo-com.svg';
 
-/*
-const CATEGORIES = [
-  ["Water", "Petfood"],
-  ["Tissues", "Shampoo"],
-  ["Diapers", "Babyfood"],
-  ["Detergent", "Cleaning Supplies", "Soap"],
-  ["Toilet Paper", "Paper Plates"],
-  ["Fish", "Vegtables", "Potato", "Breakfast"],
-  ["Meals", "International"],
-  ["Pizza", "TV Dinners", "Perogies"],
-  ["Ice Cream", "Bakery"],
-  ["Cereal", "Jam"],
-  ["Juice", "Coffie"],
-  ["Snacks", "Cookies"],
-  ["Soup", "Crackers"],
-  ["Canned Food"],
-  ["Indian", "Rice"],
-  ["Asian", "Jamacian", "Beans"],
-  ["Chips", "Nuts"],
-  ["Soda"],
-  ["Flour", "Baking", "Spices", "Sugar"],
-  ["Tomato", "Pasta", "Mexican", "Plastic"],
-  ["Oil", "Dressing", "Condiments"]
-];
-*/
 const CATEGORIES = [
   ["Water", "Petfood"],
   ["Tissues", "Shampoo"],
@@ -581,14 +556,6 @@ const imageStyle = {
   marginRight: '10px' // Space between image and text
 };
 
-/////////
-function WishList({ wishlist }) {
-  const [showWishlist, setShowWishlist] = useState(false);
-
-  const toggleWishlist = () => {
-    setShowWishlist(!showWishlist);
-  };
-
   const cardStyle = {
     backgroundColor: 'white', // White background for each card
     padding: '10px',    //inside content padding
@@ -598,6 +565,14 @@ function WishList({ wishlist }) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
+  };
+
+/////////
+function WishList({ wishlist }) {
+  const [showWishlist, setShowWishlist] = useState(false);
+
+  const toggleWishlist = () => {
+    setShowWishlist(!showWishlist);
   };
 
   return (
@@ -627,17 +602,9 @@ function WishList({ wishlist }) {
                     <h3>There's nothing in your wishlist.</h3>
                   </div>
                 ) : (
-                  wishlist.map((product, index) => (
-                    <div key={index} style={cardStyle}>
-                      <img src={product.image} alt={product.name} style={imageStyle} />
-                      <div>
-                        <h1 style={{ margin: 0 }}>{product.name}</h1>
-                        <button style={{ backgroundColor: 'orange', border: 'none', padding: '10px', marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}>Remove From Wishlist</button>
-                        <button style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }}>Take me there</button>
-                        {/* Additional product details can be added here */}
-                      </div>
-                    </div>
-                  ))
+                  wishlist.map((product, index) => 
+                    <WishListItem product={product}/>
+                  )
                 )}
               </div>
             </div>
@@ -645,6 +612,40 @@ function WishList({ wishlist }) {
         )}
       </div>
     </>
+  );
+}
+
+function WishListItem({product}) {
+
+  const [scrollToComponent, setScrollComponent] = useState(false);
+
+  useEffect(() => {
+    if (scrollToComponent) {
+      const shelfItem = document.getElementById(`${product.category}`);
+      const productItem = document.getElementById(`${product.name}-shelved`);
+
+      if (shelfItem) {
+        shelfItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+
+        if (productItem) {
+          productItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        }
+      }
+    }
+
+    setScrollComponent(false);
+  }, [scrollToComponent]);
+
+  return (
+    <div style={cardStyle}>
+      <img src={product.image} alt={product.name} style={imageStyle} />
+      <div>
+        <h1 style={{ margin: 0 }}>{product.name}</h1>
+        <button style={{ backgroundColor: 'orange', border: 'none', padding: '10px', marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}>Remove From Wishlist</button>
+        <button style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer' }} onClick={() => setScrollComponent(true)}>Take me there</button>
+        {/* Additional product details can be added here */}
+      </div>
+    </div>
   );
 }
 
