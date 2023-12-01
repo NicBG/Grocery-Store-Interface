@@ -160,7 +160,6 @@ fill: red;
 }
 
 .items:hover {
-  transition: 1s;
   transform: scale(1.03);
 }
 

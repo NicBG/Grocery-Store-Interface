@@ -220,7 +220,8 @@ function ProductRow({ product }) {
         border: "1px solid black",
         margin: "5px",
         borderRadius: '8px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        transition: '1s'
       }}
       onClick={() => handleClick()}>
       <tr>
@@ -321,7 +322,8 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
           width: '700px', // Width of the entire container
           overflow: 'hidden', // Ensures the button stays within the container's border
           marginLeft: '-400px',
-          background: 'rgba(210, 210, 255)'
+          background: 'rgba(210, 210, 255)',
+          transition: '1s'
         }}>
         <input
           type="text"
@@ -460,7 +462,7 @@ function ShelvedProducts({ products, addToWishlist, isProductInWishlist }) {
           key={product.name}
           src={product.image}
           alt={product.name}
-          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000' }}
+          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000', transition: '1s' }}
           onClick={() => openModal(product)}
         />
       ))}
@@ -605,9 +607,9 @@ function WishList({ wishlist, removeFromWishlist }) {
           top: '10px',
           right: '10px',
           background: 'transparent',
-          border: 'none'
+          border: 'none',
         }}>
-          <svg className='wishlist-icon wishlist-btn-hover wishlist-btn-clicked wishlist-btn' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M9.06,25C7.68,17.3,12.78,10.63,20.73,10c7-.55,10.47,7.93,11.17,9.55a.13.13,0,0,0,.25,0c3.25-8.91,9.17-9.29,11.25-9.5C49,9.45,56.51,13.78,55,23.87c-2.16,14-23.12,29.81-23.12,29.81S11.79,40.05,9.06,25Z" />
+          <svg className='wishlist-icon wishlist-btn-hover wishlist-btn-clicked wishlist-btn' style={{ transition: '0.5s' }} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M9.06,25C7.68,17.3,12.78,10.63,20.73,10c7-.55,10.47,7.93,11.17,9.55a.13.13,0,0,0,.25,0c3.25-8.91,9.17-9.29,11.25-9.5C49,9.45,56.51,13.78,55,23.87c-2.16,14-23.12,29.81-23.12,29.81S11.79,40.05,9.06,25Z" />
           </svg>
         </button>
 
