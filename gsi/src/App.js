@@ -173,12 +173,12 @@ function FilterableProductTable({ products }) {
   return (
     <div>
       <div style={{
-        
         position: 'fixed', // Keeps the element in the same place even when scrolling
         top: '10px', // 10px from the top of the viewport
         left: '50%', // Moves the left edge of the div to the center of the viewport
         transform: 'translateX(-50%)', // Shifts the div back to the left by half its own width
-        zIndex: '10'
+        zIndex: 10,
+        width: 1,
         
       }}>
         <SearchBar
@@ -264,10 +264,10 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
       
     } else {
       // If search bar is not clicked, fade out
+      document.body.classList.remove('body-margin-35');
       setOpacity(0);
       setAnimatedProducts([]); // Reset animated products
       setShowBar('hidden');
-      document.body.classList.remove('body-margin-35');
     }
   }, [isSearchBarClicked, products]);
   
@@ -285,9 +285,8 @@ function ProductTable({ products, filterText, isSearchBarClicked }) {
     height: '98vh',
     width: '25vh',
     direction: 'ltr',
-    zIndex: '100',
-    marginLeft: '-600px',
-    marginTop: '-70px',
+    marginLeft: '-920px',
+    marginTop: '-90px',
     
   };
 
@@ -318,7 +317,8 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
         border: '2px solid black', // Border like the input
         boxShadow: '4px 4px 6px rgba(0, 0, 0, 0.2)', // Shadow effect
         width: '700px', // Width of the entire container
-        overflow: 'hidden' // Ensures the button stays within the container's border
+        overflow: 'hidden', // Ensures the button stays within the container's border
+        marginLeft: '-400px',
 
       }}>
         <input
@@ -336,7 +336,10 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
           }}
         />
         <button
-          onClick={() => onFilterTextChange("")}
+          onClick={(event) => {
+            event.preventDefault(); // Prevents the default behavior of the button
+            onFilterTextChange("");
+          }}
           style={{
             padding: '0px',
             border: 'none', // Removes border
@@ -360,7 +363,7 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
             border: 'none', // Removes border
             backgroundColor: 'transparent', // Makes background transparent
             cursor: 'pointer', // Changes cursor to pointer on hover
-            marginLeft: '-370px',
+            marginLeft: '-980px',
             marginTop: '-200px'
           
           }}
@@ -370,10 +373,9 @@ function SearchBar({ filterText, onFilterTextChange, isSearchBarClicked, onSearc
           </svg>
         </button>
       </div>}
-      {isSearchBarClicked && !isButtonClicked && <div>
-        {(
-          <ProductTable products={PRODUCTS} filterText={filterText} isSearchBarClicked={isSearchBarClicked} />
-        )}
+      {isSearchBarClicked && !isButtonClicked && 
+      <div>
+        <ProductTable products={PRODUCTS} filterText={filterText} isSearchBarClicked={isSearchBarClicked} />
       </div> 
       }
     </form>
@@ -427,7 +429,7 @@ function Aisle({ key, categories, aisleNumber, addToWishlist }) {
 
   return (
     <div
-      key={key} style={{ display: 'flex', height: "90vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}
+      key={key} style={{ display: 'flex', height: "90vh", width: "10vh", /*flexDirection: 'column-reverse',*/ flexFlow: "column-reverse", justifyContent: 'space-around', marginLeft: paddingLeft ? '4vw' : '0.25vw', maxHeight: "100%", maxWidth: "100%" }}
     >
       {categories.map((category, subIndex) => (
         <Shelf key={category} category={category} addToWishlist={addToWishlist} />
@@ -471,7 +473,7 @@ function ShelvedProducts({ products, addToWishlist }) {
           key={product.name}
           src={product.image}
           alt={product.name}
-          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer' }}
+          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000' }}
           onClick={() => openModal(product)}
         />
       ))}
@@ -524,8 +526,6 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist }) {
     </>
   );
 }
-
-
 
 const modalOverlayStyle = {
   position: 'fixed',
@@ -694,7 +694,7 @@ export default function App() {
   const [rightArrowColor, setRightArrowColor] = useState('#000000');
 
   const startScrolling = (direction) => {
-    const scrollAmount = 8; // Adjust the scroll amount as needed
+    const scrollAmount = 6; // Adjust the scroll amount as needed
 
     setScrollInterval(setInterval(() => {
       if (direction === 'left') {
