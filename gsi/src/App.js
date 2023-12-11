@@ -60,27 +60,27 @@ const PRODUCTS = [
 
   { name: "Diapers Pack", price: 18.99, category: "Diapers", ratings: "5", image: "https://pngimg.com/d/diaper_PNG42.png" },
   { name: "Baby Food Jar", price: 1.79, category: "Babyfood", ratings: "4", image: "https://s38174.pcdn.co/wp-content/uploads/2019/01/EB_BabyFoodJars_Carrots_4oz_Front-300x300.png" },
-  
-  
+
+
   //Cleaning Supplies
   { name: "All-Purpose Cleaner", price: 3.49, category: "Cleaning Supplies", ratings: "5", image: "https://assets.shop.loblaws.ca/products/21207721/b1/en/front/21207721_front_a01_@2.png" },
   { name: "Bleach", price: 6.99, category: "Cleaning Supplies", ratings: "4", image: "https://images.homedepot.ca/productimages/p_1000661431.jpg?product-images=l" },
-  { name: "Clorox Clean Up Cleaner 946ml", price: 4.99, category: "Cleaning Supplies", ratings: "5", image: "https://i5.walmartimages.ca/images/Enlarge/124/805/6000206124805.jpg" },
-  { name: "Palmolive Liquid Dish Soap 828 mL", price: 2.97, category: "Cleaning Supplies", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/124/805/6000206124805.jpg"},
-  { name: "Tide Simply Clean Laundry Detergent 3.4L", price: 11.97, category: "Detergent", ratings: "4", image:"https://i5.walmartimages.ca/images/Enlarge/188/645/6000204188645.jpg"},
-  { name: "Purex 4 in 1 Laundry Detergent 4.43L", price: 15.47, category: "Detergent", ratings: "3", image: "https://i5.walmartimages.ca/images/Enlarge/278/154/6000207278154.jpg"},
-  { name: "Pine-Sol Multi-Surface Cleaner 1.41L", price: 5.47, category: "Cleaning Supplies", ratings:"5", image: "https://i5.walmartimages.ca/images/Enlarge/529/861/6000203529861.jpg"},
-  { name: "Swiffer Sweeper 2-in-1 Floor Cleaner, 1 Mop + 10 Refills", price: 18.97, category: "Cleaning Supplies", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/170/046/6000199170046.jpg"},
-  { name: "Swiffer WetJet Spray Liquid Floor Cleaner 1.25L", price: 8.97, category: "Cleaning Supplies", ratings: "5", image: "https://i5.walmartimages.ca/images/Enlarge/959/793/6000196959793.jpg"},
+  { name: "Clorox Clean Up Cleaner 946ml", price: 4.99, category: "Cleaning Supplies", ratings: "5", image: "https://www.clorox.ca/wp-content/uploads/sites/20/2021/01/CLX_HC_033_218142.030_CCU_Wrap_946mL_Original_500x960.png?height=500&dpr=2" },
+  { name: "Palmolive Liquid Dish Soap 828 mL", price: 2.97, category: "Cleaning Supplies", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/124/805/6000206124805.jpg" },
+  { name: "Tide Simply Clean Laundry Detergent 3.4L", price: 11.97, category: "Detergent", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/188/645/6000204188645.jpg" },
+  { name: "Purex 4 in 1 Laundry Detergent 4.43L", price: 15.47, category: "Detergent", ratings: "3", image: "https://i5.walmartimages.ca/images/Enlarge/278/154/6000207278154.jpg" },
+  { name: "Pine-Sol Multi-Surface Cleaner 1.41L", price: 5.47, category: "Cleaning Supplies", ratings: "5", image: "https://i5.walmartimages.ca/images/Enlarge/529/861/6000203529861.jpg" },
+  { name: "Swiffer Sweeper 2-in-1 Floor Cleaner, 1 Mop + 10 Refills", price: 18.97, category: "Cleaning Supplies", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/170/046/6000199170046.jpg" },
+  { name: "Swiffer WetJet Spray Liquid Floor Cleaner 1.25L", price: 8.97, category: "Cleaning Supplies", ratings: "5", image: "https://i5.walmartimages.ca/images/Enlarge/959/793/6000196959793.jpg" },
 
   //"https://media-www.canadiantire.ca/product/living/cleaning/household-cleaning-solutions/1531420/clorox-clean-up-cleaner-and-bleach-946ml-70e4c03a-0889-465a-8374-6c89ef332628.png?imdensity=1&imwidth=1244&impolicy=gZoom"
-  
-  
+
+
   { name: "Toilet Paper Roll", price: 15.99, category: "Toilet Paper", ratings: "4", image: "https://i5.walmartimages.ca/images/Enlarge/905/656/6000204905656.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
-  { name: "Disposable Paper Plates", price: 2.49, category: "Paper Plates", ratings: "3",  image: "https://m.media-amazon.com/images/I/714nsdu6sfL._AC_UF1000,1000_QL80_.jpg" },
-  { name: "Fresh Salmon", price: 9.99, category: "Fish", ratings: "4",  image: "https://assets.shop.loblaws.ca/products/20772308/b2/en/front/20772308_front_a06_@2.png" },
-  { name: "Mixed Vegetables", price: 2.49, category: "Vegetables", ratings: "3",  image: "https://assets.shop.loblaws.ca/products/20316388/b2/en/front/20316388_front_a06_@2.png" },
-  { name: "Thai Curry Paste", price: 3.99, category: "International", ratings: "2",  image: "https://assets.shop.loblaws.ca/products/20712986/b1/en/front/20712986_front_a01_@2.png" },
+  { name: "Disposable Paper Plates", price: 2.49, category: "Paper Plates", ratings: "3", image: "https://m.media-amazon.com/images/I/714nsdu6sfL._AC_UF1000,1000_QL80_.jpg" },
+  { name: "Fresh Salmon", price: 9.99, category: "Fish", ratings: "4", image: "https://assets.shop.loblaws.ca/products/20772308/b2/en/front/20772308_front_a06_@2.png" },
+  { name: "Mixed Vegetables", price: 2.49, category: "Vegetables", ratings: "3", image: "https://assets.shop.loblaws.ca/products/20316388/b2/en/front/20316388_front_a06_@2.png" },
+  { name: "Thai Curry Paste", price: 3.99, category: "International", ratings: "2", image: "https://assets.shop.loblaws.ca/products/20712986/b1/en/front/20712986_front_a01_@2.png" },
   { name: "Frozen Pizza", price: 5.99, category: "Pizza", ratings: "2", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6mlFRZxp3jf9F8tVw7PvQhOH6m-OEmp7H2g&usqp=CAU" },
   { name: "Vanilla Ice Cream", price: 4.99, category: "Ice Cream", ratings: "4", image: "https://i5.walmartimages.com/asr/fa82fc0e-fa4a-46f8-a390-038d06fe9146.4ab4b32aba6628eb97b5bc30227b6047.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" },
   { name: "Fresh Baguette", price: 2.49, category: "Bakery", ratings: "4", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1fIMVnVOTuGovvGLmoPzAL67ccNo9NdfgMQ&usqp=CAU" },
@@ -129,8 +129,8 @@ const PRODUCTS = [
   { name: "Sandwich Bags", price: 24.00, category: "Plastic", ratings: "4", image: "https://m.media-amazon.com/images/I/61nASg8CRgL.jpg" },
   { name: "Canola Oil", price: 17.00, category: "Oil", ratings: "5", image: "https://i5.walmartimages.com/asr/86c3d6a0-9899-497b-b0cc-823efd625b65.f35fdb7ce908b558e3f138e3fc944a8a.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff" },
   { name: "BBQ Sauce", price: 5.99, category: "Dressing & Condiments", ratings: "3", image: "https://assets.shop.loblaws.ca/products/20627619007/b1/en/front/20627619007_front_a01_@2.png" },
-  { name: "Ritz Original Crackers 180g", price: 3.49, category: "Crackers", ratings: "5", image: "https://assets.shop.loblaws.ca/products/21547034/b2/en/front/21547034_front_a06_@2.png"},
-  ];
+  { name: "Ritz Original Crackers 180g", price: 3.49, category: "Crackers", ratings: "5", image: "https://assets.shop.loblaws.ca/products/21547034/b2/en/front/21547034_front_a06_@2.png" },
+];
 
 function FilterableProductTable({ products }) {
   const [filterText, setFilterText] = useState('');
@@ -189,10 +189,22 @@ function ProductRow({ product }) {
       const shelfItem = document.getElementById(`${product.category}`);
       const productItem = document.getElementById(`${product.name}-shelved`);
 
-      if (shelfItem) {
-        productItem.scrollIntoView({ behavior: 'smooth', block:'center', inline: 'center' });
-        shelfItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline:'center'});
-        /*productItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline:'center'})*/
+      if (shelfItem && productItem) {
+        productItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        shelfItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+
+
+        // Apply the flickering animation to the productItem
+        productItem.style.animation = 'flickerAnimation 0.4s infinite';
+
+
+        //productItem.style.border = "1px solid red";
+        setTimeout(() => {
+          productItem.style.animation = 'none';
+          productItem.style.borderColor = '3px solid transparent';
+        }, 3000); //for 3 seconds
+
+
       }
     }
 
@@ -470,7 +482,7 @@ function ShelvedProducts({ products, addToWishlist, isProductInWishlist }) {
           key={product.name}
           src={product.image}
           alt={product.name}
-          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000', transition: '1s' }}
+          style={{ maxWidth: "100%", height: 'auto', cursor: 'pointer', zIndex: '4000', transition: '1s', border: '3px solid transparent' }}
           onClick={() => openModal(product)}
         />
       ))}
@@ -512,12 +524,12 @@ function ProductModal({ product, isOpen, closeModal, addToWishlist, isProductInW
                 <h1 style={{ textAlign: 'left' }}>{product.name}</h1>
                 <div style={{ display: 'flex', width: '100%' }}>{renderStars()}</div>
                 <div style={{ display: 'flex', width: '100%' }}><h2>Price: ${product.price}</h2></div>
-                <div style={{ display: 'flex', width: '100%', flexDirection:'column' }}> {foodCategories.includes(product.category) && <NutritionFacts product={product} />}
-                <button className='modal-button-clicked'
-                  onClick={handleAddToWishlist}
-                  style={{ backgroundColor: isProductInWishlist(product) ? 'grey' : 'orange', border: 'none', padding: '10px', marginTop:'1vh', cursor: isProductInWishlist(product) ? 'default' : 'pointer', pointerEvents: isProductInWishlist(product) ? 'none' : 'auto' }}
-                  disabled={isProductInWishlist(product)} // Disable button after click
-                >{isProductInWishlist(product) ? 'Added to Wishlist' : 'Add to Wishlist'}</button>
+                <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}> {foodCategories.includes(product.category) && <NutritionFacts product={product} />}
+                  <button className='modal-button-clicked'
+                    onClick={handleAddToWishlist}
+                    style={{ backgroundColor: isProductInWishlist(product) ? 'grey' : 'orange', border: 'none', padding: '10px', marginTop: '1vh', cursor: isProductInWishlist(product) ? 'default' : 'pointer', pointerEvents: isProductInWishlist(product) ? 'none' : 'auto' }}
+                    disabled={isProductInWishlist(product)} // Disable button after click
+                  >{isProductInWishlist(product) ? 'Added to Wishlist' : 'Add to Wishlist'}</button>
                 </div>
               </div>
             </div>
@@ -660,6 +672,18 @@ function WishListItem({ product, onTakeMeThere, onRemoveFromWishlist }) {
         if (productItem) {
           productItem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
         }
+
+
+        // Apply the flickering animation to the productItem
+        productItem.style.animation = 'flickerAnimation 0.4s infinite';
+
+
+        //productItem.style.border = "1px solid red";
+        setTimeout(() => {
+          productItem.style.animation = 'none';
+          productItem.style.borderColor = '3px solid transparent';
+        }, 3000); //for 3 seconds
+
       }
     }
 
@@ -672,8 +696,8 @@ function WishListItem({ product, onTakeMeThere, onRemoveFromWishlist }) {
       <div>
         <h1 style={{ margin: 0 }}>{product.name}</h1>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px',marginRight: '10px', marginTop: '20px', cursor: 'pointer', flex: 1 }} onClick={onRemoveFromWishlist}>Remove From Wishlist</button>
-          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer', marginTop: '20px', flex:1 }} onClick={() => {
+          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', marginRight: '10px', marginTop: '20px', cursor: 'pointer', flex: 1 }} onClick={onRemoveFromWishlist}>Remove From Wishlist</button>
+          <button className='modal-button-clicked' style={{ backgroundColor: 'orange', border: 'none', padding: '10px', cursor: 'pointer', marginTop: '20px', flex: 1 }} onClick={() => {
             setScrollComponent(true); setTimeout(() => {
               onTakeMeThere();
             }, 1);

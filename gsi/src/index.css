@@ -2,3 +2,8 @@ body {
   font-family: 'Helvetica';
 }
 
+body {
+  background-image: url("backart.jpg");
+  background-size: cover;
+  background-position: center;
+}

@@ -174,3 +174,8 @@ fill: red;
   top: 50vh
 }
 
+@keyframes flickerAnimation {
+  0%   { border-color: red; }
+  50%  { border-color: transparent; }
+  100% { border-color: red; }
+}
